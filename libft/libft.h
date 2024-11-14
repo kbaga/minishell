@@ -6,7 +6,7 @@
 /*   By: kbaga <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 20:57:34 by kbaga             #+#    #+#             */
-/*   Updated: 2024/11/08 15:33:18 by kbaga            ###   ########.fr       */
+/*   Updated: 2024/11/14 18:10:05 by kbaga            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ char	*ft_strndup(char *s, int i);
 int		ft_isalpha(int c);
 int		ft_isalnum(int c);
 char	*ft_strchr(const char *str, int c);
+char	*ft_strjoin(char *s1, char *s2);
 int		ft_strcmp(const char *s1, const char *s2);
 char	*ft_strncpy(char *s1, char *s2, int len);
 char	*ft_strpbrk(const char *s1, const char *c);

@@ -6,7 +6,7 @@
 /*   By: kbaga <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 14:28:15 by kbaga             #+#    #+#             */
-/*   Updated: 2024/11/13 15:13:19 by kbaga            ###   ########.fr       */
+/*   Updated: 2024/11/14 18:13:32 by kbaga            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,7 @@ void	exporting(t_shell *shell, char *str)
 	new_node(shell->environ, key, str, pos);
 }
 
-
+/*
 int main() {
     t_shell shell;
     shell.environ = malloc(sizeof(t_env));
@@ -136,4 +136,4 @@ int main() {
 
     return 0;
 }
-
+*/

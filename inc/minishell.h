@@ -6,7 +6,7 @@
 /*   By: kbaga <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 14:27:20 by kbaga             #+#    #+#             */
-/*   Updated: 2024/11/11 19:52:27 by kbaga            ###   ########.fr       */
+/*   Updated: 2024/11/14 18:07:46 by kbaga            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -165,6 +165,7 @@ t_env_node		*get_node(t_env *env, char *key);
 t_env_node		*create_node(char *var);
 t_env_node		*add_node(t_env *env, t_env_node *node);
 int				is_valid(char *arg);
+void			exporting(t_shell *shell, char *str);
 int				is_valid_id(char *arg);
 void			node_free(t_env_node *node);
 int				ext_val(char *arg, t_env_node *node);
