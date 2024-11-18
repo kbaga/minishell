@@ -86,7 +86,7 @@ t_shell	*init_shell(char **envp)
 	shell->executor = NULL;
 	return (shell);
 }
-
+/*
 int	main (int ac, char **av, char **envp)
 {
 	t_shell	*shell = init_shell(envp);
@@ -103,3 +103,4 @@ int	main (int ac, char **av, char **envp)
 
 	return (0);
 }
+*/

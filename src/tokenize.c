@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenize.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kbaga <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: lakamba <lakamba@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 19:42:39 by kbaga             #+#    #+#             */
-/*   Updated: 2024/11/08 18:20:06 by kbaga            ###   ########.fr       */
+/*   Updated: 2024/11/16 01:32:49 by lakamba          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,18 @@ void	*lexer_assign(t_lx **head, t_lx **curr,
 		char **input_array, int i)
 {
 	t_lx	*new_node;
-
+	
+	if (!input_array || !input_array[i])
+	{
+		printf("ERROR: input_array NULL token %d\n", i);
+		return (NULL);
+	}
 	new_node = create_token(input_array, *curr, i);
+	if (!new_node)
+	{
+		printf("ERROR: new_node est NULL");
+		return (NULL);
+	}
 	if (!*head)
 		*head = new_node;
 	else
@@ -39,6 +49,7 @@ t_lx	*create_lexer_list(char **input_array)
 		return (NULL);
 	while (input_array[i])
 	{
+		printf("ERROR: input_array[%d] = %s\n", i, input_array[i]);
 		lexer_assign(&head, &current, input_array, i);
 		i++;
 	}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kbaga <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: lakamba <lakamba@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 20:57:34 by kbaga             #+#    #+#             */
-/*   Updated: 2024/11/14 18:10:05 by kbaga            ###   ########.fr       */
+/*   Updated: 2024/11/15 23:16:11 by lakamba          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,11 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stddef.h>
+#include <stdio.h>
 
 void	*ft_memcpy(void *dest, const void *src, size_t n);
-size_t	ft_strlen(const char *s);
-char	*ft_strdup(const char *s);
+int     ft_strlen(char *s);
+char	*ft_strdup(char *s);
 char	*ft_strndup(char *s, int i);
 int		ft_isalpha(int c);
 int		ft_isalnum(int c);

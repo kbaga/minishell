@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   create_input_array.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kbaga <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: lakamba <lakamba@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 17:23:14 by kbaga             #+#    #+#             */
-/*   Updated: 2024/11/13 15:11:35 by kbaga            ###   ########.fr       */
+/*   Updated: 2024/11/16 01:37:35 by lakamba          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,6 +126,7 @@ char	**create_arr(t_shell *shell)
 		perror("Error create_arr");
 		exit(1);
 	}
+	arr[index] = NULL;
 	if (!fill_arr(arr, inp_copy))
 	{
 		perror("Memory alloc failed!");

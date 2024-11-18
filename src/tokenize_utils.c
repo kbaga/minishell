@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenize_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kbaga <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: lakamba <lakamba@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 18:11:39 by kbaga             #+#    #+#             */
-/*   Updated: 2024/11/08 18:20:28 by kbaga            ###   ########.fr       */
+/*   Updated: 2024/11/16 01:34:49 by lakamba          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,19 +44,34 @@ t_lx	*create_token(char **array, t_lx *curr, int i)
 {
 	t_lx	*new_node;
 
-	if (!array[i])
-		return (NULL);
-	new_node = malloc(sizeof(t_lx));
-	if (new_node == NULL)
+	if (!array || !array[i])
 	{
-		perror("Failed alloc");
-		exit(1);
+		printf("ERROR: chaine vide ou NULL array[%d]", i);
+		return (NULL);
+	}
+
+	if (i < 0 || array[i][0] == '\0') {
+        fprintf(stderr, "ERROR: Index invalide ou chaîne vide à index %d\n", i);
+        return (NULL);
+    }
+	new_node = malloc(sizeof(t_lx));
+	if (!new_node)
+		return (NULL);
+	if (!array[i])
+	{
+		printf("ERROR: array[%d] est NULL\n", i);
+		free(new_node);
+		return (NULL);
 	}
 	new_node->str = ft_strdup(array[i]);
-	new_node->type = which_type(array[i]);
-	new_node->index = i;
-	new_node->is_command = (new_node->type == COMMAND);
+	if (!new_node->str)
+	{
+		free(new_node);
+		return (NULL);
+	}
 	new_node->prev = curr;
 	new_node->next = NULL;
+	new_node->index = i;
+	new_node->type = which_type(new_node->str);
 	return (new_node);
 }

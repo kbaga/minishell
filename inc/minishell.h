@@ -139,6 +139,7 @@ char			**input_split(const char *s);
 int				check_pipe(t_lx *lexer);
 int				parser(t_shell *shell);
 t_lx			*lexer(t_shell *shell);
+char			**create_arr(t_shell *shell);
 
 /*------PARSING UTILS ------*/
 int				pars_check(char *str);
