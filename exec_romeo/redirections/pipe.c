@@ -1,4 +1,4 @@
-#include "./minishell.h"
+#include "../minishell.h"
 
 t_exec *create_exec_node(int id, char **cmd)
 {
@@ -36,7 +36,7 @@ void link_exec_with_pipe(t_exec *left, t_exec *right)
 	left->next = right;
 	right->prev = left;
 }
-
+/*
 //Precision : we will use execve after I implement it
 void execute_command(t_exec *node)
 {
@@ -51,4 +51,4 @@ void execute_command(t_exec *node)
 	execvp(node->execs[0], node->execs);
 	perror("execvp");
 	exit(EXIT_FAILURE);
-}
+}*/

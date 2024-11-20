@@ -1,4 +1,4 @@
-#include "./minishell.h"
+#include "../minishell.h"
 
 // Handling > (Truncate) Redirection
 void handle_truncate_redirection(t_exec *node, t_lexer_list *current)

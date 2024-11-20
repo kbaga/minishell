@@ -1,6 +1,6 @@
 #include "../minishell.h"
 
-int ft_cd(char **args)
+int	ft_cd(char **args)
 {
 	if (!args[1])
 	{
@@ -14,9 +14,11 @@ int ft_cd(char **args)
 		write(STDERR_FILENO, "cd: only relative or absolute paths allowed\n", 44);
 		return 1;
 	}
-	if (chdir(args[1]) == -1) {
+	if (chdir(args[1]) == -1)
+	{
 		perror("cd");
 		return 1;
 	}
 	return (0);
 }
+

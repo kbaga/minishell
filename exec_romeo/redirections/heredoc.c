@@ -1,4 +1,4 @@
-#include "minishell.h"
+#include "../minishell.h"
 
 void setup_heredoc_redirection(t_exec *node, const char *tmp_filename)
 {
@@ -65,17 +65,26 @@ int	create_temp_file(char *filename, size_t size, int *fd)
 	static int	heredoc_count = 0;
 	char		num_str[10];
 	size_t		len;
+	int			error_buffer;
 
 	int_to_string(heredoc_count++, num_str, sizeof(num_str));
 	len = append_str(filename, "/tmp/heredoc_", size);
+	if (len >= size)
+		error_buffer = -1;
 	len = append_str(filename, num_str, size);
+	if (len >= size)
+		error_buffer = -1;
 	len = append_str(filename, ".txt", size);
+	if (len >= size)
+		error_buffer = -1;
 	*fd = open(filename, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if (*fd == -1)
 	{
 		write(2, "Error: cannot open file\n", 24);
 		return (0);
 	}
+	if (error_buffer < 0)
+		return(-1);
 	return (1);
 }
 
@@ -85,18 +94,19 @@ void handle_heredoc_redirection(t_exec *node, t_lexer_list *current)
 	int tmp_fd;
 
 	current = current->next;
-	if (!current) {
+	if (!current)
+	{
 		write(2, "Heredoc: Missing delimiter\n", 27);
 		return;
 	}
-	if (!create_temp_file(tmp_filename, sizeof(tmp_filename), &tmp_fd)) {
+	if (!create_temp_file(tmp_filename, sizeof(tmp_filename), &tmp_fd))
+	{
 		return;
 	}
-
-	if (!read_heredoc_content(current->str, tmp_fd)) {
+	if (!read_heredoc_content(current->str, tmp_fd))
+	{
 		close(tmp_fd);
 		return;
 	}
-
 	setup_heredoc_redirection(node, tmp_filename);
 }

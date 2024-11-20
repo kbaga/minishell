@@ -34,7 +34,9 @@ typedef struct	s_env_list
 }	t_env_list;
 
 void	ft_free_tab(char **tab);
-void fork_external(t_exec *head, t_env_list *env_list);
+void	fork_external(t_exec *head, t_env_list *env_list);
+void	free_env_list(t_env_list *env_list);
+
 
 size_t	ft_strlen(const char *c)
 {
@@ -324,7 +326,7 @@ void execute_command(t_exec *node, t_env_list *env_list)
 			error_command("dup2 fd_out");
 		close(node->fd_out);
 	}
-	// if (!resolved_path)
+	//if (!resolved_path)
 	// {
 	// 	command_not_found(node->execs[0]);
 	// 	exit(EXIT_FAILURE);
@@ -334,6 +336,7 @@ void execute_command(t_exec *node, t_env_list *env_list)
 		write(STDERR_FILENO, "Error: Command execution failed\n", 32);
 		if (resolved_path)
 			free(resolved_path);
+		free_env_list(env_list);
 		exit(EXIT_FAILURE); // Ensure child process terminates
 	}
 }
@@ -354,6 +357,7 @@ void fork_external(t_exec *head, t_env_list *env_list)
 	{
 		printf("pid = 0\n");
 		execute_command(current, env_list); // Execute command in child
+		perror("execve failed");
 	}
 	else
 	{
@@ -364,39 +368,76 @@ void fork_external(t_exec *head, t_env_list *env_list)
 	while (wait(NULL) > 0); // Wait for all children
 }
 
+void free_env_list(t_env_list *env_list) {
+    t_env_node *tmp;
+    while (env_list->head != NULL) 
+	{
+        tmp = env_list->head;
+        env_list->head = env_list->head->next;
+
+		// printf("key : %s\n", tmp->key);
+		// printf("value : %s\n", tmp->val);
+        // Free key and val
+        free(tmp->key);
+        free(tmp->val);
+        // Free the node
+        free(tmp);
+    }
+}
+
 int main(int argc, char **argv, char **env) {
     t_env_list env_list;
     t_env_node *current_node, *new_node;
+
+	current_node = NULL;
 
     // Initialize the environment list
     env_list.head = NULL;
 
     // Convert char **env to t_env_list
-    for (int i = 0; env[i]; i++) {
-        char *delimiter = strchr(env[i], '=');
-        if (!delimiter)
-            continue;
+	current_node = NULL;
 
-        // Create a new environment node
-        new_node = malloc(sizeof(t_env_node));
-        if (!new_node) {
-            perror("malloc");
-            return EXIT_FAILURE;
-        }
-
-        // Split the key and value
-        new_node->key = strndup(env[i], delimiter - env[i]);
-        new_node->val = strdup(delimiter + 1);
-        new_node->next = NULL;
-
-        // Append to the list
-        if (!env_list.head) {
-            env_list.head = new_node;
-        } else {
-            current_node->next = new_node;
-        }
-        current_node = new_node;
+for (int i = 0; env[i]; i++) {
+    char *delimiter = strchr(env[i], '=');
+    if (!delimiter) { 
+        continue; // Skip malformed environment variables
     }
+
+    // Allocate new node
+    new_node = malloc(sizeof(t_env_node));
+    if (!new_node) {
+        perror("malloc");
+        // Add cleanup here if partial allocations have occurred
+        return EXIT_FAILURE;
+    }
+
+    // Allocate key and value
+    new_node->key = strndup(env[i], delimiter - env[i]);
+    if (!new_node->key) {
+        free(new_node);
+        perror("strndup");
+        return EXIT_FAILURE;
+    }
+
+    new_node->val = strdup(delimiter + 1);
+    if (!new_node->val) {
+        free(new_node->key);
+        free(new_node);
+        perror("strdup");
+        return EXIT_FAILURE;
+    }
+
+    new_node->next = NULL;
+
+    // Append to the list
+    if (!env_list.head) {
+        env_list.head = new_node; // Initialize head if list is empty
+    } else {
+        current_node->next = new_node; // Link the new node
+    }
+
+    current_node = new_node; // Move to the new node
+}
 
     // Commands for testing
     t_exec cmd1, cmd2, cmd3;
@@ -413,7 +454,7 @@ int main(int argc, char **argv, char **env) {
     cmd2.id = 2;
     cmd2.fd_in = 0;
     cmd2.fd_out = 1;
-    cmd2.execs = (char *[]){"da333te", NULL /**"-a"*/, NULL};
+    cmd2.execs = (char *[]){"date", NULL /**"-a"*/, NULL};
     cmd2.next = &cmd3;
     cmd2.prev = &cmd1;
 
@@ -429,19 +470,14 @@ int main(int argc, char **argv, char **env) {
 
     // Execute the command list
    execute_exec_list(&cmd1, &env_list);
-
-    // Free environment list
-    t_env_node *tmp;
     
 
-	while (env_list.head) 
-	{
-        tmp = env_list.head;
-        env_list.head = env_list.head->next;
-        free(tmp->key);
-        free(tmp->val);
-        free(tmp);
-    }
+	// Free environment list
+	//printf("free de la env_list :\n");
+	free_env_list(&env_list);
+
+
+
 
     return 0;
 }
