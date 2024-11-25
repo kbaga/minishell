@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kbaga <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: lakamba <lakamba@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 15:11:11 by kbaga             #+#    #+#             */
-/*   Updated: 2024/11/11 20:08:54 by kbaga            ###   ########.fr       */
+/*   Updated: 2024/11/24 17:21:36 by lakamba          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,21 +51,25 @@ void	unset_arg(t_shell *shell, char *arg, int *fails)
 	delete_var(shell, arg);
 }
 
-int	unset(t_shell *shell, char **args)
+int	unset(t_shell *shell, t_lx *curr)
 {
-	int	i;
 	int	fails;
 
-	i = 0;
 	fails = 0;
-	if (!shell || !args)
-		return (0); //EXIT FAILURE;
-	while (args[i])
+	if (!shell || !curr)
 	{
-		unset_arg(shell, args[i], &fails);
-		i++;
+		shell->exit_status = 127;
+		return (0); // EXIT FAILURE;
+	}
+	while (curr)
+	{
+		unset_arg(shell, curr->str, &fails);
+		curr = curr->next;
 	}
 	if (fails > 0)
+	{
+		shell->exit_status = 127;
 		return (0); //EXIT FAILURE;
+	}
 	return (1);//EXIT SUCCESS;
 }

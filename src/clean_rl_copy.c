@@ -6,7 +6,7 @@
 /*   By: kbaga <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 19:11:58 by kbaga             #+#    #+#             */
-/*   Updated: 2024/10/16 16:29:57 by kbaga            ###   ########.fr       */
+/*   Updated: 2024/11/21 15:03:18 by kbaga            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,8 @@ char	*clean_rl(char *rl_copy)
 	size_t	end;
 	char	*clean_cpy;
 
+	if (!rl_copy)
+		return (NULL);
 	start = 0;
 	end = ft_strlen(rl_copy) - 1;
 	while (ft_isspace(rl_copy[start]))
@@ -51,8 +53,10 @@ char	*clean_rl(char *rl_copy)
 	while (end > start && ft_isspace(rl_copy[end]))
 		end--;
 	if (!pars_check(rl_copy))
+	{
+		//free(rl_copy);
 		return (NULL);
+	}
 	clean_cpy = clean_str(rl_copy, start, end);
-	free(rl_copy);
 	return (clean_cpy);
 }

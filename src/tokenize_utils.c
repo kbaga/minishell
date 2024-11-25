@@ -6,7 +6,7 @@
 /*   By: lakamba <lakamba@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 18:11:39 by kbaga             #+#    #+#             */
-/*   Updated: 2024/11/16 01:34:49 by lakamba          ###   ########.fr       */
+/*   Updated: 2024/11/18 12:22:34 by kbaga            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,25 +44,11 @@ t_lx	*create_token(char **array, t_lx *curr, int i)
 {
 	t_lx	*new_node;
 
-	if (!array || !array[i])
-	{
-		printf("ERROR: chaine vide ou NULL array[%d]", i);
+	if (!array || !array[i] || array[i][0] == '\0')
 		return (NULL);
-	}
-
-	if (i < 0 || array[i][0] == '\0') {
-        fprintf(stderr, "ERROR: Index invalide ou chaîne vide à index %d\n", i);
-        return (NULL);
-    }
 	new_node = malloc(sizeof(t_lx));
 	if (!new_node)
 		return (NULL);
-	if (!array[i])
-	{
-		printf("ERROR: array[%d] est NULL\n", i);
-		free(new_node);
-		return (NULL);
-	}
 	new_node->str = ft_strdup(array[i]);
 	if (!new_node->str)
 	{

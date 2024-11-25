@@ -6,7 +6,7 @@
 /*   By: lakamba <lakamba@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 19:42:39 by kbaga             #+#    #+#             */
-/*   Updated: 2024/11/16 01:32:49 by lakamba          ###   ########.fr       */
+/*   Updated: 2024/11/24 18:07:53 by lakamba          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	*lexer_assign(t_lx **head, t_lx **curr,
 		char **input_array, int i)
 {
 	t_lx	*new_node;
-	
+
 	if (!input_array || !input_array[i])
 	{
 		printf("ERROR: input_array NULL token %d\n", i);
@@ -26,6 +26,8 @@ void	*lexer_assign(t_lx **head, t_lx **curr,
 	if (!new_node)
 	{
 		printf("ERROR: new_node est NULL");
+		if (*head)
+			free_lex(*head);
 		return (NULL);
 	}
 	if (!*head)
@@ -33,7 +35,7 @@ void	*lexer_assign(t_lx **head, t_lx **curr,
 	else
 		(*curr)->next = new_node;
 	*curr = new_node;
-	return (NULL);
+	return (new_node);
 }
 
 t_lx	*create_lexer_list(char **input_array)
@@ -49,8 +51,12 @@ t_lx	*create_lexer_list(char **input_array)
 		return (NULL);
 	while (input_array[i])
 	{
-		printf("ERROR: input_array[%d] = %s\n", i, input_array[i]);
-		lexer_assign(&head, &current, input_array, i);
+		//printf("ERROR: input_array[%d] = %s\n", i, input_array[i]);
+		if (!lexer_assign(&head, &current, input_array, i))
+		{
+			free_lex(head);
+			return (NULL);
+		}
 		i++;
 	}
 	return (head);

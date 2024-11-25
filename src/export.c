@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kbaga <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: lakamba <lakamba@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 14:28:15 by kbaga             #+#    #+#             */
-/*   Updated: 2024/11/14 18:13:32 by kbaga            ###   ########.fr       */
+/*   Updated: 2024/11/24 18:27:03 by lakamba          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,9 +66,6 @@ int	export_args(t_shell *shell, char **args)
 
 int	export(t_shell *shell, char **args)
 {
-	t_env	*list;
-
-	list = shell->environ;
 	if (!args || !*args)
 	{
 		if (!exp_no_args(shell))
@@ -104,6 +101,34 @@ void	exporting(t_shell *shell, char *str)
 	}
 	new_node(shell->environ, key, str, pos);
 }
+
+// void	exporting(t_shell *shell, t_lx *curr)
+// {
+// 	t_env_node	*node;
+// 	int			pos;
+// 	char		*key;
+
+// 	if (!shell || !curr->str || curr)
+// 	{
+// 		export(shell, NULL);
+// 		return ;
+// 	}
+// 	pos = 0;
+// 	key = ext_key(curr->str, &pos);
+// 	if (!key)
+// 		return ;
+// 	node = get_node(shell->environ, key);
+// 	if (node)
+// 	{
+// 		existing_node(node, curr->str, pos);
+// 		free(key);
+// 		return ;
+// 	}
+// 	else
+// 		new_node(shell->environ, key, curr->str, pos);
+// 	free(key);
+// 	curr = curr->next;
+// }
 
 /*
 int main() {

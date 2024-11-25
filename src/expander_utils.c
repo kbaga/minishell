@@ -6,7 +6,7 @@
 /*   By: kbaga <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/30 16:53:43 by kbaga             #+#    #+#             */
-/*   Updated: 2024/11/08 17:58:48 by kbaga            ###   ########.fr       */
+/*   Updated: 2024/11/21 12:44:01 by kbaga            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,8 @@ char	*ft_join_exp(char *s1, char *s2)
 	int		total_len;
 	int		i;
 
+	if (!s1 || !s2)
+		return (NULL);
 	total_len = get_len(s1, s2);
 	newstr = (char *)malloc(total_len);
 	if (!newstr)
@@ -90,8 +92,10 @@ char	*ft_join_exp(char *s1, char *s2)
 		return (NULL);
 	}
 	i = 0;
-	copy_str(newstr, s1, &i);
-	copy_str(newstr, s2, &i);
+	if (s1)
+		copy_str(newstr, s1, &i);
+	if (s2)
+		copy_str(newstr, s2, &i);
 	newstr[i] = '\0';
 	free(s1);
 	return (newstr);

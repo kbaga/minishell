@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_shell.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kbaga <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: lakamba <lakamba@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/14 16:15:16 by kbaga             #+#    #+#             */
-/*   Updated: 2024/11/14 18:10:24 by kbaga            ###   ########.fr       */
+/*   Updated: 2024/11/23 19:22:44 by lakamba          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,11 +40,34 @@ t_env	*empty_env(t_env *env)
 	return (env);
 }
 
+t_env	*empty_env_1(t_env *env)
+{
+	t_env_node	*node;
+
+	node = malloc(sizeof(t_env_node));
+	if (!node)
+	{
+		free(env);
+		return (NULL);
+	}
+	node->key = ft_strdup("PWD");
+	node->val = getcwd(NULL, 0);
+	node->next = NULL;
+	if (!node->key || !node->val)
+	{
+		node_free(node);
+		free(env);
+		return (NULL);
+	}
+	env->head = node;
+	return (env);
+}
+
 t_env	*init_env(char **envp)
 {
 	t_env		*env;
 	t_env_node	*node;
-	int	i;
+	int			i;
 
 	i = 0;
 	env = malloc(sizeof(t_env));
@@ -84,6 +107,7 @@ t_shell	*init_shell(char **envp)
 	shell->rl_copy = NULL;
 	shell->lex_head = NULL;
 	shell->executor = NULL;
+	shell->exit_status = 0;
 	return (shell);
 }
 /*

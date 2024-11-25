@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exp_utils2.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kbaga <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: lakamba <lakamba@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 14:47:09 by kbaga             #+#    #+#             */
-/*   Updated: 2024/11/11 14:55:42 by kbaga            ###   ########.fr       */
+/*   Updated: 2024/11/23 18:38:35 by lakamba          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,11 +61,9 @@ void	new_node(t_env *env, char *key, char *arg, int pos)
 
 int	exp_no_args(t_shell *shell)
 {
-	int			i;
 	t_env		*env;
 	t_env_node	*node;
 
-	i = 0;
 	env = shell->environ;
 	node = env->head;
 	if (!node)
@@ -75,5 +73,22 @@ int	exp_no_args(t_shell *shell)
 		printf("declare -x %s=%s\n", node->key, node->val);
 		node = node->next;
 	}
+	return (1);
+}
+
+int	exp_no_arg(t_env *env)
+{
+	t_pair	*pairs;
+	int		count;
+
+	if (!env || !env->head)
+		return (0);
+	count = count_env_nodes(env);
+	pairs = create_env_array(env, count);
+	if (!pairs)
+		return (0);
+	sort_env_array(pairs, count);
+	print_env_array(pairs, count);
+	free_env_arr(pairs, count);
 	return (1);
 }

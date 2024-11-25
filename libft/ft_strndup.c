@@ -6,7 +6,7 @@
 /*   By: kbaga <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 15:31:05 by kbaga             #+#    #+#             */
-/*   Updated: 2024/11/06 15:35:33 by kbaga            ###   ########.fr       */
+/*   Updated: 2024/11/21 14:46:35 by kbaga            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 char	*ft_strndup(char *s, int i)
 {
 	char	*dup;
-	size_t	len;
+	int		len;
 
 	if (!s)
 		return (NULL);

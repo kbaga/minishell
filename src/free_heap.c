@@ -6,7 +6,7 @@
 /*   By: kbaga <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 15:35:05 by kbaga             #+#    #+#             */
-/*   Updated: 2024/11/13 15:00:40 by kbaga            ###   ########.fr       */
+/*   Updated: 2024/11/18 20:32:30 by kbaga            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,26 @@
 	free(env);
 }
 */
+
+void	free_arr(char **arr, int size)
+{
+	int	i;
+
+	i = 0;
+	if (!arr)
+		return ;
+	while (i < size)
+	{
+		if (arr[i])
+		{
+			free(arr[i]);
+			arr[i] = NULL;
+		}
+		i++;
+	}
+	free(arr);
+}
+
 void	free_tab(char **tab)
 {
 	int	i;
@@ -92,7 +112,6 @@ t_lx	*free_lex(t_lx *lex_head)
 		free(curr);
 		curr = next_node;
 	}
-	lex_head = NULL;
 	return (lex_head);
 }
 /*

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exp_cmd.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kbaga <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: lakamba <lakamba@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 16:48:49 by kbaga             #+#    #+#             */
-/*   Updated: 2024/11/08 17:49:18 by kbaga            ###   ########.fr       */
+/*   Updated: 2024/11/24 00:38:36 by lakamba          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,3 +56,15 @@ void	free_env(t_env *env)
 	}
 	free(env);
 }
+
+// void	handle_exit_status(char **token, int exit_status)
+// {
+// 	char 	*exit_code;
+
+// 	exit_code = ft_itoa(exit_status);
+// 	if (!exit_code)
+// 		return ;
+// 	//*input += 2;
+// 	free(*token);
+// 	*token = exit_code;
+// }
