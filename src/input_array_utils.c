@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   input_array_utils.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kbaga <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: lakamba <lakamba@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 19:39:38 by kbaga             #+#    #+#             */
-/*   Updated: 2024/11/21 12:25:21 by kbaga            ###   ########.fr       */
+/*   Updated: 2024/11/25 19:47:07 by lakamba          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void	no_delim_found(char *str, int *len)
 			printf("no_delim_found: Quote found at index %d, skipping\n", *len);
 			*len += skip_quotes(str + *len);
 		}
-		else if (str[*len] == ' ' || is_token(str[*len]))
+		else if (str[*len] == ' ' || is_token(&str[*len]))
 		{
 			printf("no_delim_found: FOund delimiter [%c] at index %d\n", str[*len], *len);
 			return ;
@@ -63,22 +63,13 @@ void	no_delim_found(char *str, int *len)
 	printf("no_delim_found: FInished at index %d\n", *len);
 }
 
-int	is_token(char to_check)
+int	is_token(char *str)
 {
-	char	*tokens;
-
-	tokens = "<>|";
-	if (ft_strchr(tokens, to_check))
-		return (1);
-	return (0);
-}
-
-int	is_token2(char to_check)
-{
-	char	*tokens;
-
-	tokens = "<>";
-	if (ft_strchr(tokens, to_check))
+	if (!str)
+		return (0);
+	if (ft_strncmp(str, ">>", 2) == 0 || ft_strncmp(str, "<<", 2) == 0)
+		return (2);
+	if (*str == '>' || *str == '<' || *str == '|')
 		return (1);
 	return (0);
 }

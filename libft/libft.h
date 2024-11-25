@@ -28,6 +28,7 @@ char    *ft_itoa(int n);
 char    *ft_strchr(const char *str, int c);
 char	*ft_strjoin(char *s1, char *s2);
 int		ft_strcmp(const char *s1, const char *s2);
+int		ft_strncmp(const char *s1, const char *s2, size_t n);
 char	*ft_strncpy(char *s1, char *s2, int len);
 char	*ft_strpbrk(const char *s1, const char *c);
 char	*ft_strnstr(const char *s1, const char *s2, size_t n);

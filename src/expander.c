@@ -6,7 +6,7 @@
 /*   By: lakamba <lakamba@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/30 16:17:38 by kbaga             #+#    #+#             */
-/*   Updated: 2024/11/25 15:37:31 by lakamba          ###   ########.fr       */
+/*   Updated: 2024/11/25 17:40:07 by lakamba          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,7 +135,7 @@ int	expander(t_shell *shell)
 			if (!handle_char(exp, exp->str[i]))
 				return (0);
 			i++;
-		}	
+		}
 		if (i == -1)
 			return (0);
 	}

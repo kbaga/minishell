@@ -6,7 +6,7 @@
 /*   By: lakamba <lakamba@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 17:23:14 by kbaga             #+#    #+#             */
-/*   Updated: 2024/11/24 18:09:24 by lakamba          ###   ########.fr       */
+/*   Updated: 2024/11/25 19:30:12 by lakamba          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -241,7 +241,8 @@ int	count_el(char *rl_copy)
 			i++;
 		if (rl_copy[i] == '\0')
 			break ;
-		if (is_token(rl_copy[i]))
+		len = is_token(rl_copy + i);
+		if (len > 0)
 		{
 			word++;
 			i++;
@@ -249,7 +250,6 @@ int	count_el(char *rl_copy)
 		else
 		{
 			len = len_substr(rl_copy + i);
-			
 			if (len > 0)
 				word++;
 			i += len;
@@ -260,24 +260,21 @@ int	count_el(char *rl_copy)
 
 char	**fill_arr(char **arr, char *input)
 {
-	int		index;
 	int		arr_size;
 
-	index = 0;
 	if (!arr || !input)
 	{
 		perror("Allocation error fill_arr");
 		return (NULL);
 	}
 	arr_size = count_el(input);
-	index = find_token(arr, input, arr_size);
-	if (index == -1)
+	if (find_token(arr, input, arr_size) == -1)
 	{
-		perror("Error fill array");
+		perror("Error filling array with tokens");
 		free_arr(arr, arr_size);
 		return (NULL);
 	}
-	arr[index] = NULL;
+	arr[arr_size] = NULL;
 	return (arr);
 }
 

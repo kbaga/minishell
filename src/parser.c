@@ -6,7 +6,7 @@
 /*   By: lakamba <lakamba@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 18:31:25 by kbaga             #+#    #+#             */
-/*   Updated: 2024/11/24 19:35:22 by lakamba          ###   ########.fr       */
+/*   Updated: 2024/11/25 18:44:35 by lakamba          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -168,6 +168,21 @@ void	process_tokens(t_shell *shell, t_lx *tokens)
 		else if (curr->type == PIPE)
 		{
 			printf("Pipe detected but not yet implemented\n");
+			shell->exit_status = 127;
+		}
+		else if (curr->type == APPEND)
+		{
+			printf("APPEND Found\n");
+			shell->exit_status = 127;
+		}
+		else if (curr->type == HEREDOC)
+		{
+			printf("HEREDOC Found\n");
+			shell->exit_status = 127;
+		}
+		else if (curr->type == TRUNCATE)
+		{
+			printf("TRUNCATE Found\n");
 			shell->exit_status = 127;
 		}
 		curr = curr->next;

@@ -12,46 +12,45 @@
 
 #include "../inc/minishell.h"
 
-static int  is_numeric(const char *str)
+static int	is_numeric(const char *str)
 {
-    int i;
+	int	i;
 
-    i = 0;
-    if (!str)
-        return (0);
-    if (str[i] == '-' || str[i] == '+')
-        i++;
-    while (str[i])
-    {
-        if (!ft_isalnum(str[i]))
-            return (0);
-        i++;
-    }
-    return (1);
+	i = 0;
+	if (!str)
+		return (0);
+	if (str[i] == '-' || str[i] == '+')
+		i++;
+	while (str[i])
+	{
+		if (!ft_isalnum(str[i]))
+			return (0);
+		i++;
+	}
+	return (1);
 }
 
-void    ft_exit(t_shell *shell, t_lx *args)
+void	ft_exit(t_shell *shell, t_lx *args)
 {
-    int exit_code;
+	int	exit_code;
 
-    if (args && args->next)
-    {
-        printf("exit: too many arguments\n");
-        shell->exit_status = 127;
-        return ;
-    }
-    printf("exit\n");
-    if (args && args->str && !is_numeric(args->str))
-    {
-        printf("exit: %s: numeric argument required\n", args->str);
-        exit_code = 2;
-    }
-    else if (args && args->str)
-        exit_code = atoi(args->str);
-    else
-        exit_code = shell->exit_status;
-    free_env(shell->environ);
-    free_lex(shell->lex_head);
-    //free(shell);
-    exit(exit_code);
+	if (args && args->next)
+	{
+		printf("exit: too many arguments\n");
+		shell->exit_status = 127;
+		return ;
+	}
+	printf("exit\n");
+	if (args && args->str && !is_numeric(args->str))
+	{
+		printf("exit: %s: numeric argument required\n", args->str);
+		exit_code = 2;
+	}
+	else if (args && args->str)
+		exit_code = atoi(args->str);
+	else
+		exit_code = shell->exit_status;
+	free_env(shell->environ);
+	free_lex(shell->lex_head);
+	exit(exit_code);
 }

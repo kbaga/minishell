@@ -6,7 +6,7 @@
 /*   By: lakamba <lakamba@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/23 18:08:30 by kbaga             #+#    #+#             */
-/*   Updated: 2024/11/24 17:40:11 by lakamba          ###   ########.fr       */
+/*   Updated: 2024/11/25 19:34:15 by lakamba          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,9 +61,10 @@ int	handle_token(t_token_ctx *ctx, int start, int len)
 int	process_token(t_token_ctx *ctx, int *i)
 {
 	int	start;
+	int token_len;
 
 	start = *i;
-	while (ctx->s[*i] && !is_token(ctx->s[*i]) && ctx->s[*i] != ' ')
+	while (ctx->s[*i] && !is_token(ctx->s + *i) && ctx->s[*i] != ' ')
 	{
 		if (ft_strchr("\'\"", ctx->s[*i]))
 			no_delim_found(ctx->s, i);
@@ -72,11 +73,18 @@ int	process_token(t_token_ctx *ctx, int *i)
 	}
 	if (*i > start && handle_token(ctx, start, *i - start) == -1)
 		return (-1);
-	if (ctx->s[*i] && is_token(ctx->s[*i]))
+	token_len = is_token(ctx->s + *i);
+	if (token_len > 0)
 	{
-		if (handle_token(ctx, *i, 1) == -1)
+		if (handle_token(ctx, *i, token_len) == -1)
 			return (-1);
-		(*i)++;
+		*i += token_len;
 	}
+	// if (ctx->s[*i] && is_token(ctx->s[*i]))
+	// {
+	// 	if (handle_token(ctx, *i, 1) == -1)
+	// 		return (-1);
+	// 	(*i)++;
+	// }
 	return (0);
 }

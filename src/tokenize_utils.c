@@ -6,7 +6,7 @@
 /*   By: lakamba <lakamba@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 18:11:39 by kbaga             #+#    #+#             */
-/*   Updated: 2024/11/18 12:22:34 by kbaga            ###   ########.fr       */
+/*   Updated: 2024/11/25 19:42:37 by lakamba          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,18 +26,17 @@ t_token	assign_type(char tok)
 
 t_token	which_type(char *s)
 {
+	if (ft_strcmp(s, ">>") == 0)
+		return (APPEND);
+	if (ft_strcmp(s, "<<") == 0)
+		return (HEREDOC);
+	if (ft_strchr(s, '>') != NULL)
+		return (TRUNCATE);
+	if (ft_strchr(s, '<') != NULL)
+		return (REDIRECT_INPUT);
 	if (ft_strcmp(s, "|") == 0)
 		return (PIPE);
-	else if (ft_strcmp(s, ">") == 0)
-		return (TRUNCATE);
-	else if (ft_strcmp(s, ">>") == 0)
-		return (APPEND);
-	else if (ft_strcmp(s, "<") == 0)
-		return (REDIRECT_INPUT);
-	else if (ft_strcmp(s, "<<") == 0)
-		return (HEREDOC);
-	else
-		return (COMMAND);
+	return (COMMAND);
 }
 
 t_lx	*create_token(char **array, t_lx *curr, int i)

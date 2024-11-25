@@ -6,7 +6,7 @@
 /*   By: lakamba <lakamba@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 14:27:20 by kbaga             #+#    #+#             */
-/*   Updated: 2024/11/25 15:35:34 by lakamba          ###   ########.fr       */
+/*   Updated: 2024/11/25 19:23:31 by lakamba          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -212,7 +212,7 @@ int				equal_pos(char *s);
 
 /*------ARRAY UTILS ---------*/
 void			no_delim_found(char *str, int *len);
-int				is_token(char to_check);
+int				is_token(char *str);
 int				is_token2(char to_check);
 char			*add_substr(char *str, int i, int k);
 int				proc_tok(char **arr, char *s, int *i, int *j);
