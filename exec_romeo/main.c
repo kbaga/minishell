@@ -72,7 +72,7 @@ for (int i = 0; env[i]; i++) {
     cmd2.id = 2;
     cmd2.fd_in = 0;
     cmd2.fd_out = 1;
-    cmd2.execs = (char *[]){"dawerte", NULL /**"-a"*/, NULL};
+    cmd2.execs = (char *[]){"pwd", NULL /**"-a"*/, NULL};
     cmd2.next = &cmd3;
     cmd2.prev = &cmd1;
 

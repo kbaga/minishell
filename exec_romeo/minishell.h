@@ -6,7 +6,7 @@
 /*   By: romeo <romeo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 14:27:20 by kbaga             #+#    #+#             */
-/*   Updated: 2024/11/20 18:10:20 by romeo            ###   ########.fr       */
+/*   Updated: 2024/11/26 12:43:37 by romeo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@
 # include <sys/wait.h>
 # include <sysexits.h>
 # include <unistd.h>
-# include <string.h>
-# include <limits.h>
+#include <string.h>
+#include <limits.h>
 //# include "../libft/libft.h"
 
 /*----------MACROS-----------------------------*/
@@ -132,6 +132,18 @@ typedef struct	s_exec
 	struct s_exec	*next;
 }	t_exec;
 
+typedef struct s_exec_context {
+    t_lexer_list *current_lexer; // Pointer to the current lexer node
+    t_exec *exec_head;           // Head of the exec list
+    t_exec *current_exec;        // Current exec node
+    t_lexer_list *lex_head;      // Head of the lexer list
+    t_exec *exec_tail;           // Tail of the exec list
+    int lex_id;                  // ID counter for lexer
+    int exec_id;                 // ID counter for exec
+} t_exec_context;
+
+
+
 /*--------- TOKEN FUNC--------*/
 t_token			assign_type(char tok);
 t_lexer_list	*create_lexer_list(char **input_array);
@@ -164,9 +176,13 @@ int		ft_pwd(void);
 int		ft_export(char **args);
 int		ft_unset(char **args);
 
-/*---------- EXECUTION -----------------------*/
-t_exec	*create_exec_node(int id, char **cmd);
+/*----------------T_EXEC_CREATION-------------------- */
+t_exec	*create_exec_node(int id);
 void	link_exec_with_pipe(t_exec *left, t_exec *right);
+void init_exec_context(t_exec_context *context, t_shell *shell);
+char **tab_command(t_exec_context *context);
+
+/*---------- EXECUTION -----------------------*/
 void	execute_command(t_exec *node, t_env_list *env_list);
 void	fork_external(t_exec *head, t_env_list *env_list);
 void	send_to_exec(t_exec *cmd, t_env_list *env_list);

@@ -11,7 +11,7 @@ void send_to_exec(t_exec *cmd, t_env_list *env)
 			return;
 		}
 		if (is_builtin(cmd->execs[0]))
-			printf("it s a built-in"); //execute_builtin(cmd->execs[0], cmd->execs);
+			execute_builtin(cmd->execs[0], cmd->execs, env);
 		else
 			fork_external(cmd, env);
 }

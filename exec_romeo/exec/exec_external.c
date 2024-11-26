@@ -63,7 +63,7 @@ void execute_command(t_exec *node, t_env_list *env_list)
 	// {
 	// 	command_not_found(node->execs[0]);
 	// 	exit(EXIT_FAILURE);
-	// }
+	// } 
 	if (execve(resolved_path, node->execs, NULL) == -1) // Execute the command using execve
 	{
 		write(STDERR_FILENO, "Error: Command execution failed\n", 32);
