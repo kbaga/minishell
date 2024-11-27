@@ -1,40 +1,39 @@
 #include "../minishell.h"
 
-t_exec *create_exec_node(int id, char **cmd)
-{
-	t_exec *node;
+// t_exec *create_exec_node(int id, char **cmd)
+// {
+// 	t_exec *node;
 	
-	node = malloc(sizeof(t_exec));
-	if (!node)
-		return NULL;
-	node->id = id;
-	node->size = 0;
-	node->fd_in = 0;
-	node->fd_out = 1;
-	node->trunc = 0;
-	node->append = 0;
-	node->redir_input = 0;
-	node->heredoc = 0;
-	node->path = NULL;
-	node->execs = cmd;
-	node->prev = NULL;
-	node->next = NULL;
+// 	node = malloc(sizeof(t_exec));
+// 	if (!node)
+// 		return NULL;
+// 	node->id = id;
+// 	node->size = 0;
+// 	node->fd_in = 0;
+// 	node->fd_out = 1;
+// 	node->trunc = 0;
+// 	node->append = 0;
+// 	node->redir_input = 0;
+// 	node->heredoc = 0;
+// 	node->path = NULL;
+// 	node->execs = cmd;
+// 	node->prev = NULL;
+// 	node->next = NULL;
 
-	return node;
-}
+// 	return node;
+// }
 
-void link_exec_with_pipe(t_exec *left, t_exec *right)
+void link_exec_with_pipe(t_exec *node_exec, t_exec_context *context)
 {
 	int pipe_fds[2];
 	
-	if (pipe(pipe_fds) == -1) {
+	if (pipe(pipe_fds) == -1) 
+	{
 		perror("pipe");
 		return;
 	}
-	left->fd_out = pipe_fds[1];
-	right->fd_in = pipe_fds[0];
-	left->next = right;
-	right->prev = left;
+	node_exec->fd_out = pipe_fds[1];
+	context->fd_pipe = pipe_fds[0];
 }
 /*
 //Precision : we will use execve after I implement it

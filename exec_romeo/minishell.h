@@ -6,7 +6,7 @@
 /*   By: romeo <romeo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 14:27:20 by kbaga             #+#    #+#             */
-/*   Updated: 2024/11/26 12:43:37 by romeo            ###   ########.fr       */
+/*   Updated: 2024/11/27 16:22:45 by romeo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,6 +140,7 @@ typedef struct s_exec_context {
     t_exec *exec_tail;           // Tail of the exec list
     int lex_id;                  // ID counter for lexer
     int exec_id;                 // ID counter for exec
+	int fd_pipe;
 } t_exec_context;
 
 
@@ -176,11 +177,19 @@ int		ft_pwd(void);
 int		ft_export(char **args);
 int		ft_unset(char **args);
 
+int execute_builtin(const char *cmd, char **args, t_env_list *env);
+
+
 /*----------------T_EXEC_CREATION-------------------- */
 t_exec	*create_exec_node(int id);
-void	link_exec_with_pipe(t_exec *left, t_exec *right);
+void	link_exec_with_pipe(t_exec *left, t_exec_context *context);
 void init_exec_context(t_exec_context *context, t_shell *shell);
 char **tab_command(t_exec_context *context);
+t_exec *create_exec_list(t_shell *shell);
+
+void print_fd_content(int fd);
+
+
 
 /*---------- EXECUTION -----------------------*/
 void	execute_command(t_exec *node, t_env_list *env_list);
@@ -193,7 +202,7 @@ void	handle_truncate_redirection(t_exec *node, t_lexer_list *current);
 void	handle_append_redirection(t_exec *node, t_lexer_list *current);
 void	handle_input_redirection(t_exec *node, t_lexer_list *current);
 void	handle_heredoc_redirection(t_exec *node, t_lexer_list *current);
-void	handle_redirection(t_exec *node, t_lexer_list *current);
+void	handle_redirection(t_shell *shell, t_exec_context *c);
 
 /*--------- HEREDOC FUNCTIONS ----------------*/
 int		read_heredoc_content(const char *delimiter, int fd);
@@ -216,5 +225,8 @@ char	*ft_itoa(int n);
 void	int_to_string(int n, char *buffer, size_t size);
 void	error_command(const char *message);
 void	command_not_found(const char *cmd);
+
+void free_exec_node(t_exec *node);
+
 
 #endif

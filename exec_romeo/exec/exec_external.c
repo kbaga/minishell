@@ -47,6 +47,10 @@ void execute_command(t_exec *node, t_env_list *env_list)
 	char *resolved_path;
 
 	resolved_path = get_path(node->execs[0], env_list);
+	// printf("\nencore FD_IN = %d\n", node->fd_in);
+	// printf("encore FD_OUT = %d\n\n", node->fd_out);
+	// if (node->id>1)
+	// 	print_fd_content(node->fd_in);
 	if (node->fd_in != 0)// Redirect stdin if needed
 	{
 		if (dup2(node->fd_in, STDIN_FILENO) == -1)
@@ -59,11 +63,11 @@ void execute_command(t_exec *node, t_env_list *env_list)
 			error_command("dup2 fd_out");
 		close(node->fd_out);
 	}
-	//if (!resolved_path)
-	// {
-	// 	command_not_found(node->execs[0]);
-	// 	exit(EXIT_FAILURE);
-	// } 
+	if (!resolved_path)
+	{
+	 	command_not_found(node->execs[0]);
+		exit(EXIT_FAILURE);
+	}
 	if (execve(resolved_path, node->execs, NULL) == -1) // Execute the command using execve
 	{
 		write(STDERR_FILENO, "Error: Command execution failed\n", 32);

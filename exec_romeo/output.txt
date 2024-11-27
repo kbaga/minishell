@@ -1,1 +1,12 @@
-Hello
+truncate worked ???????
+passed assign
+main test1
+Execution List:
+Exec ID: 0
+  Command[0]: echo
+  Command[1]: Hello, world!
+
+
+EXECUTION :
+
+Hello, world!
