@@ -6,7 +6,7 @@
 /*   By: lakamba <lakamba@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 18:31:25 by kbaga             #+#    #+#             */
-/*   Updated: 2024/11/25 18:44:35 by lakamba          ###   ########.fr       */
+/*   Updated: 2024/11/26 13:12:26 by lakamba          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -401,8 +401,10 @@ int main(int argc, char **argv, char **envp)
             printf("\nexit\n"); // Handle Ctrl+D (end-of-file)
 			ft_exit(&shell, NULL);
 		}
+		if (*line)
+			add_history(line);
 		// Process the line
-        handle_line(&shell, line);
+		handle_line(&shell, line);
         // Reset shell state
         reset_shell(&shell);
         // Free the input line

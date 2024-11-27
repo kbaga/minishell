@@ -6,7 +6,7 @@
 /*   By: lakamba <lakamba@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 14:27:20 by kbaga             #+#    #+#             */
-/*   Updated: 2024/11/25 19:23:31 by lakamba          ###   ########.fr       */
+/*   Updated: 2024/11/26 14:45:27 by lakamba          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,16 @@
 
 /*----------MACROS-----------------------------*/
 # define PROMPT "minishell >"
+# define ERR_SYN_PIPE	"Syntax error: pipes\n"
+
+//Handle multi()
+# define FAIL_SYSCALL	-1
+# define OKAY			0
+# define FAIL_SYSCALL_PARENT	1
+# define FAIL_SYSCALL_CHILD		2
+
 /*-----Struct pour la grammaire et Lexer-------*/
+int g_exit_status = 0;
 
 typedef enum s_token
 {
@@ -240,4 +249,6 @@ void			free_heap(t_shell *shell);
 void			free_tab(char **tab);
 t_lx			*free_lex(t_lx *lex_head);
 
+/*------- SIGNALS ------*/
+void			ft_signal(int sig);
 #endif
