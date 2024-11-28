@@ -1,23 +1,0 @@
-Makefile
-builtin_pause
-inc
-libft
-minishell
-output.txt
-src
-[?2004hminishell> ls > output.txt^C[?2004lbuiltin_pause
-inc
-libft
-Makefile
-minishell
-output.txt
-src
-Makefile
-builtin_pause
-inc
-libft
-minishell
-output.txt
-src
-[?2004hminishell> 
-[?2004l[?2004hminishell> e[K^C[?2004l

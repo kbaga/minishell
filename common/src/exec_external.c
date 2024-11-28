@@ -63,8 +63,10 @@ void execute_command(t_exec *node, t_env *env_list)
 			error_command("dup2 fd_out");
 		close(node->fd_out);
 	}
+	fprintf(stderr, "node->%s\n", node->execs[0]);
 	if (!resolved_path)
 	{
+		write(2,"barbare\n", 9);
 	 	command_not_found(node->execs[0]);
 		exit(EXIT_FAILURE);
 	}

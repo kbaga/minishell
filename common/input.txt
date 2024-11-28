@@ -4,6 +4,5 @@ inc
 input.txt
 libft
 minishell
-output.txt
 src
-[?2004hminishell> ^C[?2004l
+[?2004hminishell> ls > input.txt^C[?2004l

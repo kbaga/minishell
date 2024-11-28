@@ -6,7 +6,7 @@
 /*   By: romeo <romeo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 18:31:25 by kbaga             #+#    #+#             */
-/*   Updated: 2024/11/28 04:56:38 by romeo            ###   ########.fr       */
+/*   Updated: 2024/11/28 17:28:29 by romeo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -197,8 +197,6 @@ int	parser(t_shell *shell)
 		shell->lex_head = NULL;
 	}
 	shell->lex_head = lexer(shell);
-	shell->executor = create_exec_list(shell);
-	execute_exec_list(shell, shell->executor, shell->environ);
 	if (shell->lex_head == NULL)
 	{
 		if (shell->rl_copy)
@@ -209,6 +207,8 @@ int	parser(t_shell *shell)
 		return (0);
 	}
 	interpolate_tokens(shell);
+	shell->executor = create_exec_list(shell);
+	execute_exec_list(shell, shell->executor, shell->environ);
 	//process_tokens(shell, shell->lex_head);
 	return (1);
 }

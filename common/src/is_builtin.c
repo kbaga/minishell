@@ -6,7 +6,7 @@
 /*   By: romeo <romeo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/22 15:04:29 by lakamba           #+#    #+#             */
-/*   Updated: 2024/11/28 17:03:22 by romeo            ###   ########.fr       */
+/*   Updated: 2024/11/28 17:49:17 by romeo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,14 +92,14 @@ void	handle_builtin(t_shell *shell, t_exec *exec_node)
 			shell->exit_status = 127;
 		}
 		else
-			unset(shell, execs);
+			unset(shell, &execs[1]);
 	}
 	else if (ft_strcmp(execs[0], "env") == 0)
 		exp_no_args(shell->environ);
 	// else if (ft_strcmp(execs[0], "exit") == 0)
 	// 	ft_exit(shell, &execs[1]);
-	else if (shell->exit_status == 127)
-		printf("Command not found: %s\n", execs[0]);
+	// else if (shell->exit_status == 127)
+	// 	printf("Command not found: %s\n", execs[0]);
 }
 
 // int	is_builtin(const char *cmd)

@@ -1,9 +1,9 @@
+Makefile
 builtin_pause
 inc
 input.txt
 libft
-Makefile
 minishell
-output.txt
 src
-test.txt
+yy.txt
+[?2004hminishell> ^C[?2004l
