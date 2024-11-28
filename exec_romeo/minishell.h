@@ -6,7 +6,7 @@
 /*   By: romeo <romeo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 14:27:20 by kbaga             #+#    #+#             */
-/*   Updated: 2024/11/27 16:22:45 by romeo            ###   ########.fr       */
+/*   Updated: 2024/11/27 19:23:26 by romeo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -217,7 +217,7 @@ void	free_env_list(t_env_list *env_list);
 /*--------- UTILS ----------------------------*/
 size_t	ft_strlen(const char *c);
 size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize);
-char	*ft_strjoin(const char *s1, const char *s2);
+char	*ft_strjoin2(const char *s1, const char *s2);
 int		ft_strcmp(const char *s1, const char *s2);
 char	**ft_split(char const *s, char c);
 void	ft_free_tab(char **tab);

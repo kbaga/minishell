@@ -124,7 +124,7 @@ char	**ft_split(char const *s, char c)
 	return (splitted);
 }
 
-char	*ft_strjoin(char const *s1, char const *s2)
+char	*ft_strjoin2(char const *s1, char const *s2)
 {
 	char	*res;
 	size_t	len_s1;

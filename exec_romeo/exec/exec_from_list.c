@@ -35,7 +35,22 @@ void send_to_exec(t_exec *cmd, t_env_list *env)
 			return;
 		}
 		if (is_builtin(cmd->execs[0]))
+		{
+			write(2, "test error, is builtin\n", 24);
+			if (cmd->fd_in != 0)
+			{
+				if (dup2(cmd->fd_in, STDIN_FILENO) == -1)
+				error_command("dup2 fd_in");
+				close(cmd->fd_in);
+			}
+			if (cmd->fd_out != 1)
+			{
+				if (dup2(cmd->fd_out, STDOUT_FILENO) == -1)
+					error_command("dup2 fd_out");
+				close(cmd->fd_out);
+			}
 			execute_builtin(cmd->execs[0], cmd->execs, env);
+		}
 		else
 			fork_external(cmd, env);
 }

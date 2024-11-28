@@ -7,46 +7,46 @@
 // Mock lexer creation for testing
 t_lexer_list *create_mock_lexer()
 {
-	t_lexer_list *head = malloc(sizeof(t_lexer_list));
-	t_lexer_list *node2 = malloc(sizeof(t_lexer_list));
+	// t_lexer_list *head = malloc(sizeof(t_lexer_list));
+	// t_lexer_list *node2 = malloc(sizeof(t_lexer_list));
 	t_lexer_list *node3 = malloc(sizeof(t_lexer_list));
-	t_lexer_list *node4 = malloc(sizeof(t_lexer_list));
+	//t_lexer_list *node4 = malloc(sizeof(t_lexer_list));
 	t_lexer_list *node5 = malloc(sizeof(t_lexer_list));
 	t_lexer_list *node6 = malloc(sizeof(t_lexer_list));
 	//t_lexer_list *node7 = malloc(sizeof(t_lexer_list));
 
 
-	if (!head || !node2 || !node3 || !node4 || !node5 || !node6 /*|| !node7*/)
+	if (/*!head || !node2 || */!node3 /*|| !node4 */|| !node5 || !node6 /*|| !node7*/)
 		return NULL;
 
 	// First command
-	head->str = strdup("ls");
-	head->type = COMMAND;
-	head->next =  node2;//node2;
+	// head->str = strdup("ls");
+	// head->type = COMMAND;
+	// head->next =  node2;//node2;
 
-	// // Second command
-	node2->str = strdup("|");
-	node2->type = PIPE;
-	node2->next = node3;
-	node2->prev = head;
+	// // // Second command
+	// node2->str = strdup("|");
+	// node2->type = PIPE;
+	// node2->next = node3;
+	// node2->prev = head;
 
 	// Third command
-	node3->str = strdup("grep");
+	node3->str = strdup("pwd");
 	node3->type = COMMAND;
-	node3->next = node4;
-	node3->prev = node2;
+	node3->next = node5;
+	node3->prev = NULL;//node2;
 
 	// 	// Third command
-	node4->str = strdup(".c");
-	node4->type = COMMAND;
-	node4->next = node5;
-	node4->prev = node3;
+	// node4->str = strdup("world uoiououou jjjjjjjjjjjj");
+	// node4->type = COMMAND;
+	// node4->next = node5;
+	// node4->prev = node3;
 
 	 // Third command
 	node5->str = strdup("|");
 	node5->type = PIPE;
 	node5->next = node6;
-	node5->prev = node4;
+	node5->prev = node3;
 
 	 // Third command
 	node6->str = strdup("wc");
@@ -59,7 +59,7 @@ t_lexer_list *create_mock_lexer()
 	// node7->next = NULL;
 	// node7->prev = node6;
 
-return head;
+return node3;
 }
 
 void print_exec_list(t_exec *exec_list)
@@ -205,10 +205,10 @@ int main(int ac, char** av, char **env)
 		return EXIT_FAILURE;
 	}
 
-	// Print the execution list for verification
-	//printf("Execution List:\n");
-	// print_exec_list(exec_list);
-	// printf("\n\nEXECUTION :\n\n");
+		// Print the execution list for verification
+	printf("Execution List:\n");
+	print_exec_list(exec_list);
+	printf("\n\nEXECUTION :\n\n");
 	execute_exec_list(exec_list, &env_list);
 
 
