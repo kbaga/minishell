@@ -6,7 +6,7 @@
 /*   By: romeo <romeo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 14:47:09 by kbaga             #+#    #+#             */
-/*   Updated: 2024/11/28 03:39:59 by romeo            ###   ########.fr       */
+/*   Updated: 2024/11/28 16:31:02 by romeo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,24 +59,24 @@ void	new_node(t_env *env, char *key, char *arg, int pos)
 		node_free(node);
 }
 
-int	exp_no_args(t_shell *shell)
-{
-	t_env		*env;
-	t_env_node	*node;
+// int	exp_no_args(t_shell *shell)
+// {
+// 	t_env		*env;
+// 	t_env_node	*node;
 
-	env = shell->environ;
-	node = env->head;
-	if (!node)
-		return (0);
-	while (node != NULL)
-	{
-		printf("declare -x %s=%s\n", node->key, node->val);
-		node = node->next;
-	}
-	return (1);
-}
+// 	env = shell->environ;
+// 	node = env->head;
+// 	if (!node)
+// 		return (0);
+// 	while (node != NULL)
+// 	{
+// 		printf("declare -x %s=%s\n", node->key, node->val);
+// 		node = node->next;
+// 	}
+// 	return (1);
+// }
 
-int	exp_no_arg(t_env *env)
+int	exp_no_args(t_env *env)
 {
 	t_pair	*pairs;
 	int		count;

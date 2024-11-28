@@ -1,0 +1,11 @@
+builtin_pause
+inc
+input.txt
+libft
+Makefile
+minishell
+output.txt
+src
+test.txt
+tot.txt
+ttt.txt

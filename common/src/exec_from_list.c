@@ -36,7 +36,6 @@ void send_to_exec(t_shell *shell, t_exec *cmd, t_env *env)
 		}
 		if (is_builtin(cmd->execs[0]))
 		{
-			write(2, "test error, is builtin\n", 24);
 			if (cmd->fd_in != 0)
 			{
 				if (dup2(cmd->fd_in, STDIN_FILENO) == -1)
@@ -49,7 +48,7 @@ void send_to_exec(t_shell *shell, t_exec *cmd, t_env *env)
 					error_command("dup2 fd_out");
 				close(cmd->fd_out);
 			}
-			execute_builtin(shell, cmd->execs[0], cmd->execs, env);
+			handle_builtin(shell, cmd);
 		}
 		else
 			fork_external(cmd, env);

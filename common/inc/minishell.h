@@ -6,7 +6,7 @@
 /*   By: romeo <romeo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 14:27:20 by kbaga             #+#    #+#             */
-/*   Updated: 2024/11/28 04:56:12 by romeo            ###   ########.fr       */
+/*   Updated: 2024/11/28 17:09:24 by romeo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -210,7 +210,7 @@ char			*ft_join_char(char *s, char c);
 int				expand_var(t_shell *shell, char **s, t_exp *exp, int i);
 int				is_valid_id(char *arg);
 int				create_add(t_shell *shell, char *args);
-int				exp_no_args(t_shell *shell);
+int				exp_no_args(t_env *env);
 char			*ext_key(char *str, int *pos);
 void			existing_node(t_env_node *node, char *arg, int pos);
 void			new_node(t_env *env, char *key, char *arg, int pos);
@@ -266,13 +266,20 @@ int				process_token(t_token_ctx *ctx, int *i);
 /* Builtins */
 int				is_builtin(const char *command);
 void			ft_cd(char **args);
-void			ft_echo(char **args);
+//void			ft_echo(char **args);
+void			ft_echo(char **execs, t_shell *shell); ///kenny
 void			ft_env(t_env_node *env);
 void			ft_exit(t_shell *shell, t_lx *args);
+
 void			ft_pwd(void);
 void			ft_export(char **args);
-void			ft_unset(char **args);
-int			execute_builtin(t_shell *shell, const char *cmd, char **args, t_env *env);
+int				unset(t_shell *shell, char **execs);
+void			execute_builtin(t_shell *shell, t_exec *cmd);
+void			handle_builtin(t_shell *shell, t_exec *exec_node);
+void			exporting(t_shell *shell, char *str);
+
+
+
 
 /* Execution */
 t_exec			*create_exec_list(t_shell *shell);

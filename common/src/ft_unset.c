@@ -6,7 +6,7 @@
 /*   By: romeo <romeo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 15:11:11 by kbaga             #+#    #+#             */
-/*   Updated: 2024/11/27 20:11:38 by romeo            ###   ########.fr       */
+/*   Updated: 2024/11/28 17:10:44 by romeo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,25 +51,28 @@ void	unset_arg(t_shell *shell, char *arg, int *fails)
 	delete_var(shell, arg);
 }
 
-int	ft_unset(t_shell *shell, t_lx *curr)
+int    unset(t_shell *shell, char **execs)
 {
-	int	fails;
+    int    fails;
+    int i;
 
-	fails = 0;
-	if (!shell || !curr)
-	{
-		shell->exit_status = 127;
-		return (0); // EXIT FAILURE;
-	}
-	while (curr)
-	{
-		unset_arg(shell, curr->str, &fails);
-		curr = curr->next;
-	}
-	if (fails > 0)
-	{
-		shell->exit_status = 127;
-		return (0); //EXIT FAILURE;
-	}
-	return (1);//EXIT SUCCESS;
+    fails = 0;
+    if (!shell || !execs || !execs[0])
+    {
+        shell->exit_status = 127;
+        return (0); // EXIT FAILURE;
+    }
+    i = 0;
+    while (execs[i] != NULL)
+    {
+        unset_arg(shell, execs[i], &fails);
+        i++;
+    }
+    if (fails > 0)
+    {
+        shell->exit_status = 127;
+        return (0); //EXIT FAILURE;
+    }
+    shell->exit_status = 0;
+    return (1); // EXIT SUCCESS;
 }

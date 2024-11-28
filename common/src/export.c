@@ -6,7 +6,7 @@
 /*   By: romeo <romeo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 14:28:15 by kbaga             #+#    #+#             */
-/*   Updated: 2024/11/28 03:59:58 by romeo            ###   ########.fr       */
+/*   Updated: 2024/11/28 16:44:36 by romeo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,12 +33,12 @@
 // 	return (1);
 // }
 
-void	node_free(t_env_node *node)
-{
-	free(node->key);
-	free(node->val);
-	free(node);
-}
+// void	node_free(t_env_node *node)
+// {
+// 	free(node->key);
+// 	free(node->val);
+// 	free(node);
+// }
 
 int	export_args(t_shell *shell, char **args)
 {
@@ -68,7 +68,7 @@ int	export(t_shell *shell, char **args)
 {
 	if (!args || !*args)
 	{
-		if (!exp_no_args(shell))
+		if (!exp_no_args(shell->environ))
 			return (0);
 		return (1);
 	}

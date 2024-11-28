@@ -1,0 +1,9 @@
+Makefile
+builtin_pause
+inc
+input.txt
+libft
+minishell
+output.txt
+src
+[?2004hminishell> ^C[?2004l
