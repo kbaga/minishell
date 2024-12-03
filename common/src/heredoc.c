@@ -78,9 +78,12 @@ int	create_temp_file(char *filename, size_t size, int *fd)
 	if (len >= size)
 		error_buffer = -1;
 	*fd = open(filename, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+	printf("filename : %s\n", filename);
 	if (*fd == -1)
-	{
+	{	
 		write(2, "Error: cannot open file\n", 24);
+		perror("open");
+    	printf("errno: %d\n", errno);
 		return (0);
 	}
 	if (error_buffer < 0)
@@ -94,6 +97,7 @@ void handle_heredoc_redirection(t_exec *node, t_lx *current)
 	int tmp_fd;
 
 	current = current->next;
+	printf("\nentering heredoc, delimiter -> %s\n", current->str);
 	if (!current)
 	{
 		write(2, "Heredoc: Missing delimiter\n", 27);

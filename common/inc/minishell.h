@@ -6,7 +6,7 @@
 /*   By: romeo <romeo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 14:27:20 by kbaga             #+#    #+#             */
-/*   Updated: 2024/11/28 17:09:24 by romeo            ###   ########.fr       */
+/*   Updated: 2024/11/29 17:14:02 by romeo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,6 +144,18 @@ typedef struct s_exec_context
 	int				exec_id;
 	int				fd_pipe;
 }t_exec_context;
+
+typedef struct s_fd_backup
+{
+    int saved_stdin;
+    int saved_stdout;
+} t_fd_backup;
+
+
+/*-----------------FD--------------*/
+void restore_fds(t_fd_backup *backup);
+t_fd_backup save_fds(void);
+
 
 
 /* -------- EXPANDER FUNCTIONS -------- */

@@ -1,0 +1,12 @@
+Makefile
+builtin_pause
+inc
+libft
+minishell
+pp.txt
+src
+
+test stdout
+
+NARMOL
+[?2004hminishell> ^C[?2004l

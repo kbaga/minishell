@@ -109,6 +109,7 @@ t_exec *create_exec_list(t_shell *shell)
 	init_exec_context(context, shell);
 	while(context->current_lexer)
 	{
+		// fprintf(stderr,"\nloop\n");
 		new_exec_node = create_exec_node(context->exec_id);
 		context->exec_id++;
 		if (context->exec_head == NULL)
@@ -116,6 +117,9 @@ t_exec *create_exec_list(t_shell *shell)
 		else
 			context->current_exec->next = new_exec_node;
 		context->current_exec = new_exec_node;
+		
+		// fprintf(stderr, "before assign : lexer str -> %s\n", context->current_lexer->str);
+
 		if (context->exec_id > 1 
 			&& context->current_lexer->prev->type == PIPE)  ////  setup pipe input fd
 			context->current_exec->fd_in = context->fd_pipe; ////  if previous is pipe
@@ -125,11 +129,11 @@ t_exec *create_exec_list(t_shell *shell)
 			assign_command(shell, context);
 		if(context->current_lexer
 			&& context->current_lexer->type != COMMAND)
-			{
 				handle_redirection(shell, context);
-			}
+		//fprintf(stderr, "after midddle assign : lexer str -> %s\n\n", context->current_lexer->str);
 		if (context->current_lexer && context->current_lexer->next)
 			context->current_lexer = context->current_lexer->next;
+		//fprintf(stderr, "after assign : lexer str -> %s\n\n", context->current_lexer->str);
 	}
 	result_head = context->exec_head;
 	free(context);

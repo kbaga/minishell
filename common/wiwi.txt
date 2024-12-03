@@ -1,0 +1,14 @@
+Makefile
+builtin_pause
+caca.txt
+inc
+input.txt
+libft
+minishell
+o.txt
+pipi.txt
+pp.txt
+src
+wiwi.txt
+
+NARMOL

@@ -1,0 +1,13 @@
+Makefile
+builtin_pause
+caca.txt
+inc
+libft
+minishell
+pp.txt
+src
+
+test stdout
+
+NARMOL
+[?2004hminishell> c^C[?2004l

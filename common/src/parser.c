@@ -6,7 +6,7 @@
 /*   By: romeo <romeo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 18:31:25 by kbaga             #+#    #+#             */
-/*   Updated: 2024/11/28 17:28:29 by romeo            ###   ########.fr       */
+/*   Updated: 2024/12/02 22:08:02 by romeo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -189,6 +189,101 @@ void	process_tokens(t_shell *shell, t_lx *tokens)
 	}
 }*/
 
+/*..................................A DELETE ...................................*/
+
+// static void print_exec_node(t_exec *node)
+// {
+//     if (!node)
+//     {
+//         fprintf(stderr, "Exec node is NULL\n");
+//         return;
+//     }
+
+//     fprintf(stderr, "\nExec Node:\n");
+//     fprintf(stderr, "------------------------------\n");
+//     fprintf(stderr, "ID: %d\n", node->id);
+//     fprintf(stderr, "Size: %d\n", node->size);
+//     fprintf(stderr, "FD_IN: %d\n", node->fd_in);
+//     fprintf(stderr, "FD_OUT: %d\n", node->fd_out);
+//     fprintf(stderr, "Truncate: %d\n", node->trunc);
+//     fprintf(stderr, "Append: %d\n", node->append);
+//     fprintf(stderr, "Redirect Input: %d\n", node->redir_input);
+//     fprintf(stderr, "Heredoc: %d\n", node->heredoc);
+
+//     if (node->execs)
+//     {
+//         fprintf(stderr, "Execs:\n");
+//         for (int i = 0; node->execs[i]; i++)
+//         {
+//             fprintf(stderr, "  [%d]: %s\n", i, node->execs[i]);
+//         }
+//     }
+//     else
+//     {
+//         fprintf(stderr, "Execs: NULL\n");
+//     }
+
+//     if (node->path)
+//     {
+//         fprintf(stderr, "Path:\n");
+//         for (int i = 0; node->path[i]; i++)
+//         {
+//             fprintf(stderr, "  [%d]: %s\n", i, node->path[i]);
+//         }
+//     }
+//     else
+//     {
+//         fprintf(stderr, "Path: NULL\n");
+//     }
+
+//     fprintf(stderr, "------------------------------\n");
+// }
+
+// static const char *get_token_name(t_token type) 
+// {
+//     switch (type) 
+//     {
+//         case COMMAND:
+//             return "COMMAND";
+//         case PIPE:
+//             return "PIPE";
+//         // case REDIRECT_IN:
+//         //     return "REDIRECT_IN";
+//         // case REDIRECT_OUT:
+//         //     return "REDIRECT_OUT";
+//         case HEREDOC:
+//             return "HEREDOC";
+//         default:
+//             return "UNKNOWN";
+//     }
+// }
+
+// static void display_lexer_list(t_lx *lexer)
+// {
+//     if (!lexer)
+//     {
+//         printf("Lexer list is empty.\n");
+//         return;
+//     }
+
+//     printf("\nLexer List:\n");
+//     printf("--------------------------------------------------\n");
+//     printf("| Index | Type         | String                 |\n");
+//     printf("--------------------------------------------------\n");
+
+//     while (lexer)
+//     {
+//         printf("| %-5d | %-12s | %-20s |\n",
+//                lexer->index,
+//                get_token_name(lexer->type), // Correctly call the helper function
+//                lexer->str ? lexer->str : "NULL");
+//         lexer = lexer->next;
+//     }
+
+//     printf("--------------------------------------------------\n");
+// }
+/*..................................A DELETE ...................................*/
+
 int	parser(t_shell *shell)
 {
 	if (shell->lex_head)
@@ -207,8 +302,16 @@ int	parser(t_shell *shell)
 		return (0);
 	}
 	interpolate_tokens(shell);
+	//display_lexer_list(shell->lex_head);
 	shell->executor = create_exec_list(shell);
+	// t_exec *currently = shell->executor;
+	// while(currently)
+	// {
+	// 	print_exec_node(currently);
+	// 	currently = currently->next;
+	// }
 	execute_exec_list(shell, shell->executor, shell->environ);
+	// fprintf(stderr, "\n\nstderr_____PASSED____\n\n");
 	//process_tokens(shell, shell->lex_head);
 	return (1);
 }
@@ -355,7 +458,6 @@ void handle_line(t_shell *shell, char *line)
         printf("Parsing failed for input: %s\n", line);
         shell->exit_status = 1;
     }
-
     // Cleanup after execution
     free(shell->rl_input);
     shell->rl_input = NULL;
@@ -399,8 +501,9 @@ int main(int argc, char **argv, char **envp)
         // Signal handling (customize run_signal for your shell)
 
         // Prompt for input
-        line = readline("minishell> ");
-        if (!line)
+		t_fd_backup fd_backup = save_fds();         ///backup si redirection
+		line = readline("minishell> ");
+		if (!line)
         {
             printf("\nexit\n"); // Handle Ctrl+D (end-of-file)
 			ft_exit(&shell, NULL);
@@ -414,6 +517,7 @@ int main(int argc, char **argv, char **envp)
         // Free the input line
         free(line);
         line = NULL;
+		restore_fds(&fd_backup);
     }
 
     // Cleanup before exiting

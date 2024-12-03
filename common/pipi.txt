@@ -1,9 +1,17 @@
 Makefile
 builtin_pause
+caca.txt
 inc
 input.txt
 libft
 minishell
+o.txt
+pipi.txt
+pp.txt
 src
-yy.txt
+stdin restored to terminal
+
+test stdout
+
+NARMOL
 [?2004hminishell> ^C[?2004l
