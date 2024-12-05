@@ -26,14 +26,6 @@ void handle_append_redirection(t_exec *node, t_lx *current)
 {
 	int fd;
 
-	if (!node || !current) {
-    fprintf(stderr, "Invalid node or current pointer\n");
-    return;
-}if (!current->next) {
-    fprintf(stderr, "Invalid next pointer in lexer list\n");
-    return;
-}
-
 	current = current->next;
 	fd = open(current->str, O_WRONLY | O_CREAT | O_APPEND, 0644);
 	if (fd == -1) {
@@ -102,7 +94,7 @@ void handle_redirection(t_shell *shell, t_exec_context *c)
 	}
 	if (c->current_lexer)
 		c->current_lexer = c->current_lexer->next;
-	// if (c->current_lexer)
-		// fprintf(stderr, "after handle spec : %s\n", c->current_lexer->str);
+	if (c->current_lexer)
+		fprintf(stderr, "after handle spec : %s\n", c->current_lexer->str);
 
 }

@@ -65,29 +65,31 @@ int	create_temp_file(char *filename, size_t size, int *fd)
 	static int	heredoc_count = 0;
 	char		num_str[10];
 	size_t		len;
-	int			error_buffer;
-
+	
 	int_to_string(heredoc_count++, num_str, sizeof(num_str));
+	
+	printf("heredoc count : %d\nnum_str : %s\n\n", heredoc_count, num_str);
+	printf("size : %ld", size);
+	
 	len = append_str(filename, "/tmp/heredoc_", size);
-	if (len >= size)
-		error_buffer = -1;
+	printf("len1 = %ld\n", len);
+	printf("filename -1 : %s$\n", filename);
 	len = append_str(filename, num_str, size);
-	if (len >= size)
-		error_buffer = -1;
+	printf("len2 = %ld\n", len);
 	len = append_str(filename, ".txt", size);
 	if (len >= size)
-		error_buffer = -1;
+		return(0);
+	printf("filename : %s$\n", filename);
+	printf("len3 = %ld\n", len);
 	*fd = open(filename, O_WRONLY | O_CREAT | O_TRUNC, 0644);
-	printf("filename : %s\n", filename);
+	len = 0;
+	fprintf(stderr, "fd --> %d\n", *fd);
 	if (*fd == -1)
-	{	
-		write(2, "Error: cannot open file\n", 24);
-		perror("open");
-    	printf("errno: %d\n", errno);
+	{
+		//write(2, "Error: cannot open file\n", 24);
+		perror("open failed");
 		return (0);
 	}
-	if (error_buffer < 0)
-		return(-1);
 	return (1);
 }
 
@@ -97,20 +99,18 @@ void handle_heredoc_redirection(t_exec *node, t_lx *current)
 	int tmp_fd;
 
 	current = current->next;
-	printf("\nentering heredoc, delimiter -> %s\n", current->str);
-	if (!current)
-	{
+	if (!current) {
 		write(2, "Heredoc: Missing delimiter\n", 27);
 		return;
 	}
-	if (!create_temp_file(tmp_filename, sizeof(tmp_filename), &tmp_fd))
-	{
+	if (!create_temp_file(tmp_filename, sizeof(tmp_filename), &tmp_fd)) {
 		return;
 	}
-	if (!read_heredoc_content(current->str, tmp_fd))
-	{
+
+	if (!read_heredoc_content(current->str, tmp_fd)) {
 		close(tmp_fd);
 		return;
 	}
+
 	setup_heredoc_redirection(node, tmp_filename);
 }
