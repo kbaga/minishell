@@ -76,19 +76,24 @@ void handle_redirection(t_shell *shell, t_exec_context *c)
 {
 	(void)shell;
 	// fprintf(stderr, "before handle spec : %s\n", c->current_lexer->str);
+	if (!c || !c->current_lexer->next || !c->current_lexer)
+	{
+        fprintf(stderr, "Redirection syntax error: missing argument\n");
+		return ;
+	}
 	if (c->current_lexer->type == TRUNCATE)
 	{
 		handle_truncate_redirection(c->current_exec, c->current_lexer);
-		c->current_lexer = c->current_lexer->next;
+		// c->current_lexer = c->current_lexer->next;
 	}
 	else if (c->current_lexer->type == APPEND)
 	{
 		handle_append_redirection(c->current_exec, c->current_lexer);
-		c->current_lexer = c->current_lexer->next;
+		// c->current_lexer = c->current_lexer->next;
 	}
 	else if (c->current_lexer->type == REDIRECT_INPUT) {
 		handle_input_redirection(c->current_exec, c->current_lexer);
-		c->current_lexer = c->current_lexer->next;
+		// c->current_lexer = c->current_lexer->next;
 
 	}
 	else if (c->current_lexer->type == HEREDOC) {
@@ -100,9 +105,10 @@ void handle_redirection(t_shell *shell, t_exec_context *c)
 		link_exec_with_pipe(c->current_exec, c);
 		return;
 	}
-	if (c->current_lexer)
-		c->current_lexer = c->current_lexer->next;
+	if (c->current_lexer && c->current_lexer->next)
+		c->current_lexer = c->current_lexer->next->next;
+	else
+		c->current_lexer = NULL;
 	// if (c->current_lexer)
-		// fprintf(stderr, "after handle spec : %s\n", c->current_lexer->str);
-
+	// fprintf(stderr, "after handle spec : %s\n", c->current_lexer->str);
 }

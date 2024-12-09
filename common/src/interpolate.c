@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   interpolate.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: romeo <romeo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: lakamba <lakamba@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 16:50:16 by kbaga             #+#    #+#             */
-/*   Updated: 2024/11/29 03:54:28 by romeo            ###   ########.fr       */
+/*   Updated: 2024/12/04 13:30:29 by lakamba          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,13 +42,13 @@ static int	process_char(t_shell *shell, t_exp *exp, int *i)
 	if (exp->str[*i] == '\'')
 	{
 		*i = skip_single_quote(exp->str, *i, exp);
-		printf("skip line");
+		//printf("skip line");
 		return (*i != -1);
 	}
 	else if (exp->str[*i] == '\"')
 	{
 		*i = skip_double_quote(shell, exp->str, *i, exp);
-		printf("skip line");
+		//printf("skip line");
 		return (*i != -1);
 	}
 	if (exp->str[*i] == '$')

@@ -16,7 +16,7 @@ static void old_prompt(int sig)
 {
     g_exit_status = 1;
     printf("\n");
-    rl_replace_line("", 0);
+    //rl_replace_line("", 0);
     rl_on_new_line();
     rl_redisplay();
     (void)sig;
@@ -26,7 +26,7 @@ static void heredoc(int sig)
 {
     g_exit_status = 1;
     printf("\n");
-    rl_replace_line("", 0);
+    //rl_replace_line("", 0);
     rl_on_new_line();
     (void)sig;
 }

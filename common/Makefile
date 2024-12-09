@@ -1,6 +1,6 @@
 # Compiler and flags
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror -Iinc -Ilibft -g
+CFLAGS = -g -Wall -Wextra -Werror -Iinc -Ilibft -g
 LDFLAGS = -lreadline
 RM = rm -f
 

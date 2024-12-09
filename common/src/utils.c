@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: romeo <romeo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: lakamba <lakamba@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/23 19:40:08 by kbaga             #+#    #+#             */
-/*   Updated: 2024/11/27 19:01:09 by romeo            ###   ########.fr       */
+/*   Updated: 2024/12/05 23:39:51 by lakamba          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,33 +26,42 @@ int	is_whitespace(char c)
 	return (0);
 }
 
-/*
-int	handle_quotes(char **arr, char *s, int *k, int *i)
+void	reset_shell(t_shell *shell)
 {
-	char	qte;
-	int		start;
-
-	qte = s[*k];
-	(*k)++;
-	start = *k;
-	while (s[*k] && s[*k] != qte)
-		(*k)++;
-	if (add_str(arr, s, start, *k, i) == -1)
-		return (-1);
-	(*k)++;
-	return (0);
+	if (shell->lex_head)
+	{
+		free_lex(shell->lex_head);
+		shell->lex_head = NULL;
+	}
 }
 
-int	handle_substr(char **arr, char *s, int *k, int *i)
+void	handle_line(t_shell *shell, char *line)
 {
-	int	start;
-
-	start = *k;
-	while (s[*k] && !is_token(s[*k])
-		&& !is_whitespace(s[*k]))
-		(*k)++;
-	if (add_subtr(arr, s, start, *k, i) == -1)
-		return (-1);
-	return (0);
+	if (!line || !*line)
+		return ;
+	shell->rl_input = ft_strdup(line);
+	if (!shell->rl_input)
+	{
+		perror("Failed to allocate input string");
+		return ;
+	}
+	if (!parser(shell))
+	{
+		printf("Parsing failed for input: %s\n", line);
+		shell->exit_status = 1;
+	}
+	free(shell->rl_input);
+	shell->rl_input = NULL;
 }
-*/
+
+t_lx	*lexer_clean(t_shell *shell, t_lx *lex_head)
+{
+	if (shell->rl_copy)
+	{
+		free(shell->rl_copy);
+		shell->rl_copy = NULL;
+	}
+	if (lex_head)
+		free_lex(lex_head);
+	return (NULL);
+}

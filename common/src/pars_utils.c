@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pars_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kbaga <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: lakamba <lakamba@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 17:07:26 by kbaga             #+#    #+#             */
-/*   Updated: 2024/10/16 15:29:25 by kbaga            ###   ########.fr       */
+/*   Updated: 2024/12/05 15:36:10 by lakamba          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,15 +25,15 @@ int	pars_check(char *str)
 	d_quote = 0;
 	while (str[i])
 	{
-		if (str[i] == '\'')
+		if (str[i] == '\'' && !d_quote)
 			s_quote = !s_quote;
-		else if (str[i] == '\"')
+		else if (str[i] == '\"' && !s_quote)
 			d_quote = !d_quote;
+		else if (!s_quote && !d_quote && ft_strchr(invalid, str[i]))
+			return (0);
 		i++;
 	}
 	if (d_quote || s_quote)
-		return (0);
-	if (ft_strpbrk(str, invalid) != NULL)
 		return (0);
 	return (1);
 }

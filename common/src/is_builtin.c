@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   is_builtin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: romeo <romeo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: lakamba <lakamba@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/22 15:04:29 by lakamba           #+#    #+#             */
-/*   Updated: 2024/11/28 18:08:24 by romeo            ###   ########.fr       */
+/*   Updated: 2024/12/05 16:14:58 by lakamba          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,8 +96,8 @@ void	handle_builtin(t_shell *shell, t_exec *exec_node)
 	}
 	else if (ft_strcmp(execs[0], "env") == 0)
 		exp_no_args(shell->environ);
-	// else if (ft_strcmp(execs[0], "exit") == 0)
-	// 	ft_exit(shell, &execs[1]);
+	else if (ft_strcmp(execs[0], "exit") == 0)
+		ft_exit(shell, execs);
 	// else if (shell->exit_status == 127)
 	// 	printf("Command not found: %s\n", execs[0]);
 }

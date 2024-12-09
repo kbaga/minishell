@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: romeo <romeo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: lakamba <lakamba@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 14:27:20 by kbaga             #+#    #+#             */
-/*   Updated: 2024/11/29 17:14:02 by romeo            ###   ########.fr       */
+/*   Updated: 2024/12/05 16:43:32 by lakamba          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -281,7 +281,7 @@ void			ft_cd(char **args);
 //void			ft_echo(char **args);
 void			ft_echo(char **execs, t_shell *shell); ///kenny
 void			ft_env(t_env_node *env);
-void			ft_exit(t_shell *shell, t_lx *args);
+void			ft_exit(t_shell *shell, char **args);
 
 void			ft_pwd(void);
 void			ft_export(char **args);
@@ -290,21 +290,14 @@ void			execute_builtin(t_shell *shell, t_exec *cmd);
 void			handle_builtin(t_shell *shell, t_exec *exec_node);
 void			exporting(t_shell *shell, char *str);
 
-
-
-
 /* Execution */
 t_exec			*create_exec_list(t_shell *shell);
-
-
 void			execute_command(t_exec *node, t_env *env_list);
 void			fork_external(t_exec *head, t_env *env_list);
 void			send_to_exec(t_shell *shell, t_exec *cmd, t_env *env_list);
 void			execute_exec_list(t_shell *shell, t_exec *cmd_list, t_env *env);
-
 void			error_command(const char *message);
 void			command_not_found(const char *cmd);
-
 
 /* Redirection */
 void			handle_redirection(t_shell *shell, t_exec_context *context);
@@ -313,18 +306,13 @@ void			handle_append_redirection(t_exec *node, t_lx *current);
 void			handle_input_redirection(t_exec *node, t_lx *current);
 void			handle_heredoc_redirection(t_exec *node, t_lx *current);
 void 			link_exec_with_pipe(t_exec *node_exec, t_exec_context *context);
-
 int				is_delimiter(const char *buffer, const char *delimiter);
 void			int_to_string(int n, char *buffer, size_t size);
-
-
 
 char			*clean_rl(char *rl_copy);
 t_env			*init_env(char **envp);
 char			**input_split(const char *s);
 t_shell			*init_shell(char **envp);
-
-
 
 /* Environment */
 t_env_node		*get_node(t_env *env, char *key);
@@ -335,6 +323,9 @@ void			free_env(t_env *env);
 void			free_env_list(t_env *env_list);
 
 /* Utils */
+t_lx			*lexer_clean(t_shell *shell, t_lx *lex_head);
+void			reset_shell(t_shell *shell);
+void			handle_line(t_shell *shell, char *line);
 char			*interpolate(t_shell *shell, char *str);
 void			interpolate_tokens(t_shell *shell);
 char			*ft_strjoin(char *s1, char *s2);
