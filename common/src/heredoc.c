@@ -60,57 +60,62 @@ int	append_str(char *dest, const char *src, size_t dest_size)
 	return (i + j);
 }
 
-int	create_temp_file(char *filename, size_t size, int *fd)
-{
-	static int	heredoc_count = 0;
-	char		num_str[10];
-	size_t		len;
-	int			error_buffer;
+// int	create_temp_file(char *filename, size_t size, int *fd)
+// {
+// 	static int	heredoc_count = 0;
+// 	char		num_str[10];
+// 	// size_t		len;
+	
+// 	int_to_string(heredoc_count++, num_str, sizeof(num_str));
+	
+// 	// printf("heredoc count : %d\nnum_str : %s\n\n", heredoc_count, num_str);
+// 	// printf("size : %ld", size);
+	
+// 	// len = append_str(filename, "/tmp/heredoc_", size);
+// 	// len = append_str(filename, num_str, size);
+// 	// printf("len2 = %ld\n", len);
+// 	// len = append_str(filename, ".txt", size);
+// 	// if (len >= size)
+// 	// 	return(0);
+// 	// printf("filename : %s$\n", filename);
+// 	// printf("len3 = %ld\n", len);
+// 	*fd = open("./tmp/heredoc.txt", O_WRONLY | O_CREAT | O_TRUNC, 0644);
+// 	// len = 0;
+// 	fprintf(stderr, "fd --> %d\n", *fd);
+// 	if (*fd == -1)
+// 	{
+// 		//write(2, "Error: cannot open file\n", 24);
+// 		perror("open failed");
+// 		return (0);
+// 	}
+// 	return (1);
+// }
 
-	int_to_string(heredoc_count++, num_str, sizeof(num_str));
-	len = append_str(filename, "/tmp/heredoc_", size);
-	if (len >= size)
-		error_buffer = -1;
-	len = append_str(filename, num_str, size);
-	if (len >= size)
-		error_buffer = -1;
-	len = append_str(filename, ".txt", size);
-	if (len >= size)
-		error_buffer = -1;
-	*fd = open(filename, O_WRONLY | O_CREAT | O_TRUNC, 0644);
-	printf("filename : %s\n", filename);
-	if (*fd == -1)
-	{	
-		write(2, "Error: cannot open file\n", 24);
-		perror("open");
-    	printf("errno: %d\n", errno);
-		return (0);
-	}
-	if (error_buffer < 0)
-		return(-1);
-	return (1);
-}
 
 void handle_heredoc_redirection(t_exec *node, t_lx *current)
 {
-	char tmp_filename[256];
+	const char *tmp_filename = "/tmp/heredoc.txt";
 	int tmp_fd;
 
 	current = current->next;
-	printf("\nentering heredoc, delimiter -> %s\n", current->str);
-	if (!current)
-	{
+	if (!current) {
 		write(2, "Heredoc: Missing delimiter\n", 27);
 		return;
 	}
-	if (!create_temp_file(tmp_filename, sizeof(tmp_filename), &tmp_fd))
-	{
+
+	tmp_fd = open(tmp_filename, O_CREAT | O_RDWR | O_TRUNC, 0600);
+	if (tmp_fd == -1) {
+		perror("Heredoc: Could not create file");
 		return;
 	}
-	if (!read_heredoc_content(current->str, tmp_fd))
-	{
+
+	if (!read_heredoc_content(current->str, tmp_fd)) {
 		close(tmp_fd);
+		unlink(tmp_filename);
 		return;
 	}
+
+	//close(tmp_fd);
+	//unlink(tmp_filename); // Unlink immediately after use.
 	setup_heredoc_redirection(node, tmp_filename);
 }

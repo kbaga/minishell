@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lakamba <lakamba@student.42.fr>            +#+  +:+       +#+        */
+/*   By: romeo <romeo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 14:27:20 by kbaga             #+#    #+#             */
-/*   Updated: 2024/12/05 16:43:32 by lakamba          ###   ########.fr       */
+/*   Updated: 2024/12/12 19:09:22 by romeo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -292,6 +292,7 @@ void			exporting(t_shell *shell, char *str);
 
 /* Execution */
 t_exec			*create_exec_list(t_shell *shell);
+char			**tab_command(t_exec_context *context);
 void			execute_command(t_exec *node, t_env *env_list);
 void			fork_external(t_exec *head, t_env *env_list);
 void			send_to_exec(t_shell *shell, t_exec *cmd, t_env *env_list);
