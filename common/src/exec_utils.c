@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lakamba <lakamba@student.42.fr>            +#+  +:+       +#+        */
+/*   By: romeo <romeo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 23:38:53 by lakamba           #+#    #+#             */
-/*   Updated: 2024/12/05 23:39:37 by lakamba          ###   ########.fr       */
+/*   Updated: 2024/12/14 05:22:57 by romeo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,5 @@ char	**tab_command(t_exec_context *context)
 		lexer = lexer->next;
 	}
 	result[command_count] = NULL; // Null-terminate the array
-	context->current_lexer = lexer; // Update the context to the next unprocessed lexer
 	return (result);
 }

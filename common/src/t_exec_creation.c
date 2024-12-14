@@ -52,12 +52,12 @@ void	init_exec_context(t_exec_context *context, t_shell *shell)
 	context->fd_pipe = 0;
 }
 
-void	assign_command(t_shell *shell, t_exec_context *context)
+void	assign_command(t_shell *shell, t_exec_context *c)
 {
 	(void)shell;
-	context->current_exec->execs = tab_command(context);
-	if (context->current_lexer && context->current_lexer->next)
-		context->current_lexer = context->current_lexer->next;
+	c->current_exec->execs = tab_command(c);
+	while (c->current_lexer && c->current_lexer->type == COMMAND)
+		c->current_lexer = c->current_lexer->next;
 }
 
 static void	update_exec_links(t_exec_context *context, t_exec *new_exec_node)
@@ -74,7 +74,6 @@ static void	update_exec_links(t_exec_context *context, t_exec *new_exec_node)
 
 static int	process_lexer_node(t_shell *shell, t_exec_context *context)
 {
-	fprintf(stderr, "before process lexer to exec: %s\n", context->current_lexer->str);
 	while (context->current_lexer && context->current_lexer->type != COMMAND)
 		handle_redirection(shell, context);
 	if (context->current_lexer->type == COMMAND)

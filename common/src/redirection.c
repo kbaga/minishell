@@ -103,12 +103,12 @@ void handle_redirection(t_shell *shell, t_exec_context *c)
 	else if (c->current_lexer->type == PIPE)
 	{
 		link_exec_with_pipe(c->current_exec, c);
+		c->current_lexer = c->current_lexer->next;
 		return;
 	}
 	if (c->current_lexer && c->current_lexer->next)
 		c->current_lexer = c->current_lexer->next->next;
 	else
 		c->current_lexer = NULL;
-	// if (c->current_lexer)
-	// fprintf(stderr, "after handle spec : %s\n", c->current_lexer->str);
+	
 }
