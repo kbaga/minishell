@@ -6,7 +6,7 @@
 /*   By: romeo <romeo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 14:27:20 by kbaga             #+#    #+#             */
-/*   Updated: 2024/12/12 19:09:22 by romeo            ###   ########.fr       */
+/*   Updated: 2024/12/18 17:11:34 by romeo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,6 +130,7 @@ typedef struct s_exec
 	char			**execs;
 	struct s_exec	*prev;
 	struct s_exec	*next;
+	int				pipe;
 }	t_exec;
 
 /* Exec Context */
@@ -295,6 +296,7 @@ t_exec			*create_exec_list(t_shell *shell);
 char			**tab_command(t_exec_context *context);
 void			execute_command(t_exec *node, t_env *env_list);
 void			fork_external(t_exec *head, t_env *env_list);
+void			fork_builtin(t_shell *shell, t_exec *head, t_env *env_list);
 void			send_to_exec(t_shell *shell, t_exec *cmd, t_env *env_list);
 void			execute_exec_list(t_shell *shell, t_exec *cmd_list, t_env *env);
 void			error_command(const char *message);

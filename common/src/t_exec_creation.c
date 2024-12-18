@@ -38,6 +38,7 @@ t_exec	*create_exec_node(int id)
 	node->execs = NULL;
 	node->prev = NULL;
 	node->next = NULL;
+	node->pipe = 0;
 	return (node);
 }
 

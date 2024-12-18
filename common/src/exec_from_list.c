@@ -1,5 +1,47 @@
 #include "../inc/minishell.h"
 
+void fork_builtin(t_shell *shell, t_exec *head, t_env *env_list)
+{
+	t_exec *current;
+	pid_t pid;
+
+	(void)env_list;
+	current = head;
+	pid = fork();
+	if (pid < 0) 
+	{
+		perror("fork");
+		exit(EXIT_FAILURE);
+	}
+	else if (pid == 0)
+	{
+		if (current->fd_in != 0)
+		{
+			fprintf(stderr, "node -> %s ; fd_in = %d\n", current->execs[0], current->fd_in);
+			if (dup2(current->fd_in, STDIN_FILENO) == -1)
+				error_command("dup2 fd_in");
+			close(current->fd_in);
+		}
+		if (current->fd_out != 1)
+		{
+			fprintf(stderr, "node -> %s ; fd_out = %d\n", current->execs[0], current->fd_out);
+			if (dup2(current->fd_out, STDOUT_FILENO) == -1)
+				error_command("dup2 fd_out");
+			close(current->fd_out);
+		}
+		handle_builtin(shell, current); // Execute command in child
+		_exit(0);
+	}
+	else
+	{
+		// Close FDs in parent to avoid leaks
+		if (current->fd_in != 0) close(current->fd_in);
+		if (current->fd_out != 1) close(current->fd_out);
+	}
+	// fprintf(stderr, "waiting for child\n");
+	while (wait(NULL) > 0); // Wait for all children
+	// fprintf(stderr, "_______\nend of waiting for child\n");
+}
 void fork_external(t_exec *head, t_env *env_list)
 {
 	t_exec *current;
@@ -26,7 +68,6 @@ void fork_external(t_exec *head, t_env *env_list)
 	// fprintf(stderr, "waiting for child\n");
 	while (wait(NULL) > 0); // Wait for all children
 	// fprintf(stderr, "_______\nend of waiting for child\n");
-
 }
 
 // Function to separate execution between built-in and execve
@@ -37,22 +78,26 @@ void send_to_exec(t_shell *shell, t_exec *cmd, t_env *env)
 		write(STDERR_FILENO, "Invalid command.\n", 17);
 		return;
 	}
-	if (is_builtin(cmd->execs[0]))
+	if (is_builtin(cmd->execs[0]) && cmd->pipe == 0)
 	{
 		if (cmd->fd_in != 0)
 		{
+			fprintf(stderr, "node -> %s ; fd_in = %d\n", cmd->execs[0], cmd->fd_in);
 			if (dup2(cmd->fd_in, STDIN_FILENO) == -1)
-			error_command("dup2 fd_in");
+				error_command("dup2 fd_in");
 			close(cmd->fd_in);
 		}
 		if (cmd->fd_out != 1)
 		{
+			fprintf(stderr, "node -> %s ; fd_out = %d\n", cmd->execs[0], cmd->fd_out);
 			if (dup2(cmd->fd_out, STDOUT_FILENO) == -1)
-					error_command("dup2 fd_out");
-		close(cmd->fd_out);
+				error_command("dup2 fd_out");
+			close(cmd->fd_out);
 		}
 		handle_builtin(shell, cmd);
 	}
+	else if (is_builtin(cmd->execs[0]) && cmd->pipe == 1)
+		fork_builtin(shell, cmd, env);
 	else
 		fork_external(cmd, env);
 	// fprintf(stderr, "scooby send to exec\n");
@@ -70,12 +115,7 @@ void execute_exec_list(t_shell *shell, t_exec *cmd_list, t_env *env)
 		// restore_fds(&fd_backup);
         current = current->next;   // Move to the next command in the list
 	}
-	// if (!isatty(STDIN_FILENO))
-    // 	fprintf(stderr, "stdin is not a terminal\n");
-	// else
-	// 	printf("stdin restored to terminal\n");
-	// printf("\ntest stdout\n");
-	// fprintf(stderr, "finishe exec\n");
+
 }
 
 

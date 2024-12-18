@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lakamba <lakamba@student.42.fr>            +#+  +:+       +#+        */
+/*   By: romeo <romeo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 18:31:25 by kbaga             #+#    #+#             */
-/*   Updated: 2024/12/05 16:43:41 by lakamba          ###   ########.fr       */
+/*   Updated: 2024/12/17 21:46:03 by romeo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ int	main(int argc, char **argv, char **envp)
 	}
 	while (1)
 	{
-		t_fd_backup fd_backup = save_fds();
+		t_fd_backup fd_backup = save_fds(); //////
 		line = readline("minishell> ");
 		if (!line)
 		{
@@ -115,7 +115,7 @@ int	main(int argc, char **argv, char **envp)
 		reset_shell(shell);
 		free(line);
 		line = NULL;
-		restore_fds(&fd_backup);
+		restore_fds(&fd_backup); /////////
 	}
 	free_env(shell->environ);
 	return (0);

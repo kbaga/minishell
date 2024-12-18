@@ -1,0 +1,8 @@
+Makefile
+inc
+libft
+ls.txt
+minishell
+noperm
+pwd.txt
+src

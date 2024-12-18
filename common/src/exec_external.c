@@ -81,6 +81,6 @@ void execute_command(t_exec *node, t_env *env_list)
 		free_env_list(env_list);
 		exit(EXIT_FAILURE); // Ensure child process terminates
 	}
-	// fprintf(stderr, "execve ne quitte pas\n");
+	 fprintf(stderr, "execve ne quitte pas\n");
 }
 

@@ -2,21 +2,14 @@
 
 void setup_heredoc_redirection(t_exec *node, const char *tmp_filename)
 {
-	int tmp_fd;
-	
-	tmp_fd = open(tmp_filename, O_RDONLY);
-	if (tmp_fd == -1) {
-		perror("open");
-		return;
-	}
-	if (dup2(tmp_fd, STDIN_FILENO) == -1) {
-		perror("dup2");
-		close(tmp_fd);
-		return;
-	}
-	close(tmp_fd);
+	node->fd_in = open(tmp_filename, O_RDONLY);
+	if (node->fd_in == -1) 
+	{
+	perror("open heredoc");
 	unlink(tmp_filename);
-	node->fd_in = STDIN_FILENO;
+	return;
+	}
+	unlink(tmp_filename);
 	node->heredoc = 1;
 }
 
@@ -97,25 +90,30 @@ void handle_heredoc_redirection(t_exec *node, t_lx *current)
 	const char *tmp_filename = "/tmp/heredoc.txt";
 	int tmp_fd;
 
-	current = current->next;
-	if (!current) {
-		write(2, "Heredoc: Missing delimiter\n", 27);
-		return;
-	}
-
-	tmp_fd = open(tmp_filename, O_CREAT | O_RDWR | O_TRUNC, 0600);
-	if (tmp_fd == -1) {
+	tmp_fd = open(tmp_filename, O_CREAT | O_WRONLY | O_APPEND | O_TRUNC, 0600);
+	if (tmp_fd == -1)
+	{
 		perror("Heredoc: Could not create file");
 		return;
 	}
-
-	if (!read_heredoc_content(current->str, tmp_fd)) {
-		close(tmp_fd);
-		unlink(tmp_filename);
-		return;
+	while (current && current->next && current->type == HEREDOC) 
+	{
+		current = current->next;
+		if (!current) 
+		{
+			write(2, "Heredoc: Missing delimiter\n", 27);
+			close(tmp_fd);
+			unlink(tmp_filename);
+			return;
+		}
+		// Read the heredoc content and append to the same fd
+		if (!read_heredoc_content(current->str, tmp_fd))
+		{
+			close(tmp_fd);
+			unlink(tmp_filename);
+			return;
+		}
 	}
-
-	//close(tmp_fd);
-	//unlink(tmp_filename); // Unlink immediately after use.
+	close(tmp_fd); // Close the file after writing all heredocs
 	setup_heredoc_redirection(node, tmp_filename);
 }
