@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: romeo <romeo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: lakamba <lakamba@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 14:27:20 by kbaga             #+#    #+#             */
-/*   Updated: 2024/12/18 17:11:34 by romeo            ###   ########.fr       */
+/*   Updated: 2024/12/24 17:37:25 by lakamba          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@
 # define FAIL_SYSCALL_CHILD 2
 
 /*-------- GLOBAL VARIABLES ------------------*/
-extern int g_exit_status;
+extern int	g_exit_status;
 
 /*---------- ENUMS ---------------------------*/
 typedef enum s_token
@@ -111,7 +111,7 @@ typedef struct s_shell
 	char				*rl_copy;
 	int					exit_status;
 	t_env				*environ;
-	t_lx		*lex_head;
+	t_lx				*lex_head;
 	struct s_exec		*executor;
 }	t_shell;
 
@@ -136,51 +136,47 @@ typedef struct s_exec
 /* Exec Context */
 typedef struct s_exec_context
 {
-	t_lx	*current_lexer;
+	t_lx			*current_lexer;
 	t_exec			*exec_head;
 	t_exec			*current_exec;
-	t_lx	*lex_head;
+	t_lx			*lex_head;
 	t_exec			*exec_tail;
 	int				lex_id;
 	int				exec_id;
 	int				fd_pipe;
-}t_exec_context;
+}	t_exec_context;
 
 typedef struct s_fd_backup
 {
-    int saved_stdin;
-    int saved_stdout;
-} t_fd_backup;
-
+	int	saved_stdin;
+	int	saved_stdout;
+}	t_fd_backup;
 
 /*-----------------FD--------------*/
-void restore_fds(t_fd_backup *backup);
-t_fd_backup save_fds(void);
-
-
+void			restore_fds(t_fd_backup *backup);
+t_fd_backup		save_fds(void);
 
 /* -------- EXPANDER FUNCTIONS -------- */
-char            *realloc_str(char *res, int pos);
-int             handle_var(t_shell *shell, t_exp *exp, int i);
-int             skip_single_quote(char *str, int i, t_exp *exp);
-int             skip_double_quote(t_shell *shell, char *str, int i, t_exp *exp);
+char			*realloc_str(char *res, int pos);
+int				handle_var(t_shell *shell, t_exp *exp, int i);
+int				skip_single_quote(char *str, int i, t_exp *exp);
+int				skip_double_quote(t_shell *shell, char *str, int i, t_exp *exp);
 
 /* -------- EXPORT FUNCTIONS -------- */
-int             equal_pos(char *s);
+int				equal_pos(char *s);
 
 /* -------- ARRAY UTILS -------- */
-int             is_token2(char to_check);
-char            *add_substr(char *str, int i, int k);
-int             proc_tok(char **arr, char *s, int *i, int *j);
-int             proc_inp(char **arr, char *s);
+int				is_token2(char to_check);
+char			*add_substr(char *str, int i, int k);
+int				proc_tok(char **arr, char *s, int *i, int *j);
+int				proc_inp(char **arr, char *s);
 
 /* -------- SORT FUNCTIONS -------- */
-int             count_env_nodes(t_env *env);
+int				count_env_nodes(t_env *env);
 
 /* -------- FREER FUNCTIONS -------- */
-void            free_tab(char **tab);
-t_lx            *free_lex(t_lx *lex_head);
-
+void			free_tab(char **tab);
+t_lx			*free_lex(t_lx *lex_head);
 
 /* Info Struct */
 typedef struct s_info
@@ -209,7 +205,6 @@ typedef struct s_token_ctx
 
 /*---------- FUNCTION PROTOTYPES -------------*/
 
-
 ///////////       RANDOMS              ///////////
 
 t_exp			*init_exp(char *str);
@@ -229,28 +224,26 @@ void			existing_node(t_env_node *node, char *arg, int pos);
 void			new_node(t_env *env, char *key, char *arg, int pos);
 
 /* -------- EXPANDER FUNCTIONS -------- */
-char            *realloc_str(char *res, int pos);
-int             handle_var(t_shell *shell, t_exp *exp, int i);
-int             skip_single_quote(char *str, int i, t_exp *exp);
-int             skip_double_quote(t_shell *shell, char *str, int i, t_exp *exp);
+char			*realloc_str(char *res, int pos);
+int				handle_var(t_shell *shell, t_exp *exp, int i);
+int				skip_single_quote(char *str, int i, t_exp *exp);
+int				skip_double_quote(t_shell *shell, char *str, int i, t_exp *exp);
 
 /* -------- EXPORT FUNCTIONS -------- */
-int             equal_pos(char *s);
+int				equal_pos(char *s);
 
 /* -------- ARRAY UTILS -------- */
-int             is_token2(char to_check);
-char            *add_substr(char *str, int i, int k);
-int             proc_tok(char **arr, char *s, int *i, int *j);
-int             proc_inp(char **arr, char *s);
+int				is_token2(char to_check);
+char			*add_substr(char *str, int i, int k);
+int				proc_tok(char **arr, char *s, int *i, int *j);
+int				proc_inp(char **arr, char *s);
 
 /* -------- SORT FUNCTIONS -------- */
-int             count_env_nodes(t_env *env);
+int				count_env_nodes(t_env *env);
 
 /* -------- FREER FUNCTIONS -------- */
-void            free_tab(char **tab);
-t_lx            *free_lex(t_lx *lex_head);
-
-
+void			free_tab(char **tab);
+t_lx			*free_lex(t_lx *lex_head);
 
 /* Initialization */
 t_shell			*init_shell(char **envp);
@@ -269,7 +262,7 @@ int				is_token(char *str);
 int				check_pipe(t_lx *lexer);
 int				parser(t_shell *shell);
 int				count_el(char *rl_copy);
-t_lx	*lexer(t_shell *shell);
+t_lx			*lexer(t_shell *shell);
 char			**create_arr(t_shell *shell);
 int				pars_check(char *str);
 
@@ -293,7 +286,9 @@ void			exporting(t_shell *shell, char *str);
 
 /* Execution */
 t_exec			*create_exec_list(t_shell *shell);
+t_exec			*create_exec_node(int id);
 char			**tab_command(t_exec_context *context);
+void			init_exec_context(t_exec_context *context, t_shell *shell);
 void			execute_command(t_exec *node, t_env *env_list);
 void			fork_external(t_exec *head, t_env *env_list);
 void			fork_builtin(t_shell *shell, t_exec *head, t_env *env_list);
@@ -308,8 +303,8 @@ void			handle_truncate_redirection(t_exec *node, t_lx *current);
 void			handle_append_redirection(t_exec *node, t_lx *current);
 void			handle_input_redirection(t_exec *node, t_lx *current);
 void			handle_heredoc_redirection(t_exec *node, t_lx *current);
-void 			link_exec_with_pipe(t_exec *node_exec, t_exec_context *context);
-int				is_delimiter(const char *buffer, const char *delimiter);
+void			link_exec_with_pipe(t_exec *node_exec, t_exec_context *context);
+int				is_delimiter(char *buffer, char *delimiter);
 void			int_to_string(int n, char *buffer, size_t size);
 
 char			*clean_rl(char *rl_copy);

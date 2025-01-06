@@ -6,7 +6,7 @@
 /*   By: lakamba <lakamba@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 16:50:16 by kbaga             #+#    #+#             */
-/*   Updated: 2024/12/04 13:30:29 by lakamba          ###   ########.fr       */
+/*   Updated: 2024/12/19 18:40:57 by lakamba          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ static void	handle_exit_status(t_exp *exp, int *i, int exit_status)
 		j++;
 	}
 	free(exit_code);
-	*i += 1; // Avance de 1 pour sauter le `?`
+	*i += 1;
 }
 
 static int	process_char(t_shell *shell, t_exp *exp, int *i)
@@ -42,13 +42,11 @@ static int	process_char(t_shell *shell, t_exp *exp, int *i)
 	if (exp->str[*i] == '\'')
 	{
 		*i = skip_single_quote(exp->str, *i, exp);
-		//printf("skip line");
 		return (*i != -1);
 	}
 	else if (exp->str[*i] == '\"')
 	{
 		*i = skip_double_quote(shell, exp->str, *i, exp);
-		//printf("skip line");
 		return (*i != -1);
 	}
 	if (exp->str[*i] == '$')
@@ -90,7 +88,6 @@ char	*interpolate(t_shell *shell, char *str)
 		i++;
 	}
 	result = ft_strdup(exp->res);
-	//free_exp(exp);
 	return (cleanup_and_return(exp, result));
 }
 

@@ -6,7 +6,7 @@
 /*   By: lakamba <lakamba@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 19:42:39 by kbaga             #+#    #+#             */
-/*   Updated: 2024/11/24 18:07:53 by lakamba          ###   ########.fr       */
+/*   Updated: 2025/01/06 16:41:57 by lakamba          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,6 @@ t_lx	*create_lexer_list(char **input_array)
 		return (NULL);
 	while (input_array[i])
 	{
-		//printf("ERROR: input_array[%d] = %s\n", i, input_array[i]);
 		if (!lexer_assign(&head, &current, input_array, i))
 		{
 			free_lex(head);

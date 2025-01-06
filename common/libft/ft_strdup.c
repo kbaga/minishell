@@ -6,7 +6,7 @@
 /*   By: lakamba <lakamba@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 20:59:17 by kbaga             #+#    #+#             */
-/*   Updated: 2024/11/15 23:22:04 by lakamba          ###   ########.fr       */
+/*   Updated: 2024/12/19 17:52:33 by lakamba          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ char	*ft_strdup(char *s)
 {
 	char	*dup;
 	int		len;
-	int 	i;
+	int		i;
 
 	if (!s)
 		return (NULL);

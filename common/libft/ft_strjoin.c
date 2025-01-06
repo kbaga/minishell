@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strjoin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kbaga <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: lakamba <lakamba@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/14 16:54:42 by kbaga             #+#    #+#             */
-/*   Updated: 2024/11/14 17:49:11 by kbaga            ###   ########.fr       */
+/*   Updated: 2024/12/19 18:05:11 by lakamba          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,5 +39,22 @@ char	*ft_strjoin(char *s1, char *s2)
 	ft_strcopy(res, s1, &i);
 	ft_strcopy(res, s2, &i);
 	res[i] = '\0';
+	return (res);
+}
+
+char	*ft_strjoin2(char const *s1, char const *s2)
+{
+	char	*res;
+	size_t	len_s1;
+	size_t	len_s2;
+
+	len_s1 = ft_strlen((char *)s1);
+	len_s2 = ft_strlen((char *)s2);
+	res = malloc(sizeof(char) * (len_s1 + len_s2 + 1));
+	if (!res)
+		return (NULL);
+	ft_strlcpy(res, s1, len_s1 + 1);
+	ft_strlcpy(res + len_s1, s2, len_s2 + 1);
+	res[len_s1 + len_s2] = 0;
 	return (res);
 }

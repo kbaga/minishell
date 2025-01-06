@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: romeo <romeo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: lakamba <lakamba@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 23:38:53 by lakamba           #+#    #+#             */
-/*   Updated: 2024/12/14 05:22:57 by romeo            ###   ########.fr       */
+/*   Updated: 2025/01/06 16:51:25 by lakamba          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,9 @@
 
 void	free_env_list(t_env *env_list)
 {
-	t_env_node *tmp;
-	while (env_list->head != NULL) 
+	t_env_node	*tmp;
+
+	while (env_list->head != NULL)
 	{
 		tmp = env_list->head;
 		env_list->head = env_list->head->next;
@@ -58,13 +59,13 @@ char	**tab_command(t_exec_context *context)
 	result = malloc(sizeof(char *) * (command_count + 1));
 	if (!result)
 		return (NULL);
-	lexer = context->current_lexer;// Reset lexer to the original position
+	lexer = context->current_lexer;
 	command_count = 0;
-	while (lexer && lexer->type == COMMAND)// Assign each command token to the result array
+	while (lexer && lexer->type == COMMAND)
 	{
-		result[command_count++] = strdup(lexer->str);
+		result[command_count++] = ft_strdup(lexer->str);
 		lexer = lexer->next;
 	}
-	result[command_count] = NULL; // Null-terminate the array
+	result[command_count] = NULL;
 	return (result);
 }

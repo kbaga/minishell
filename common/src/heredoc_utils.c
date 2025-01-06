@@ -1,19 +1,33 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   heredoc_utils.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: lakamba <lakamba@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/12/19 18:41:55 by lakamba           #+#    #+#             */
+/*   Updated: 2024/12/24 17:37:00 by lakamba          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../inc/minishell.h"
 
-int is_delimiter(const char *buffer, const char *delimiter)
+int	is_delimiter(char *buffer, char *delimiter)
 {
-	return (strncmp(buffer, delimiter, strlen(delimiter)) == 0 &&
-		   buffer[strlen(delimiter)] == '\n');
+	return (ft_strncmp(buffer, delimiter, ft_strlen(delimiter)) == 0
+		&& buffer[strlen(delimiter)] == '\n');
 }
 
 static int	ft_num_len(int n)
 {
 	int	len;
 
-	len = (n <= 0) ? 1 : 0;
+	len = 0;
+	if (n <= 0)
+		len = 1;
 	while (n != 0)
 	{
-		n /= 10;
+		n = n / 10;
 		len++;
 	}
 	return (len);
@@ -52,9 +66,9 @@ void	int_to_string(int n, char *buffer, size_t size)
 	if (!temp_str)
 	{
 		buffer[0] = '\0';
-		return;
+		return ;
 	}
-	strncpy(buffer, temp_str, size - 1);
+	ft_strncpy(buffer, temp_str, size - 1);
 	buffer[size - 1] = '\0';
 	free(temp_str);
 }

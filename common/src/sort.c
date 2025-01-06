@@ -6,7 +6,7 @@
 /*   By: lakamba <lakamba@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/23 17:05:01 by lakamba           #+#    #+#             */
-/*   Updated: 2024/11/23 18:42:19 by lakamba          ###   ########.fr       */
+/*   Updated: 2024/12/24 11:19:52 by lakamba          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int	count_env_nodes(t_env *env)
 {
 	t_env_node	*node;
-	int	count;
+	int			count;
 
 	count = 0;
 	node = env->head;
@@ -27,7 +27,7 @@ int	count_env_nodes(t_env *env)
 	return (count);
 }
 
-t_pair *create_env_array(t_env *env, int count)
+t_pair	*create_env_array(t_env *env, int count)
 {
 	t_env_node	*node;
 	t_pair		*pairs;

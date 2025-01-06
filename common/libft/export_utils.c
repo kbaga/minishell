@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: romeo <romeo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: lakamba <lakamba@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 13:44:59 by kbaga             #+#    #+#             */
-/*   Updated: 2024/11/28 04:00:17 by romeo            ###   ########.fr       */
+/*   Updated: 2024/12/19 17:51:30 by lakamba          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,10 +87,6 @@ t_env_node	*add_node(t_env *env, t_env_node *node)
 	node->next = NULL;
 	return (node);
 }
-
-
-/////////////////////
-
 
 int	ext_val(char *arg, t_env_node *node)
 {

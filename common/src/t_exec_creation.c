@@ -1,57 +1,16 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   t_exec_creation.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: lakamba <lakamba@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/12/19 18:06:45 by lakamba           #+#    #+#             */
+/*   Updated: 2024/12/19 18:10:19 by lakamba          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../inc/minishell.h"
-
-void	free_exec_node(t_exec *node)
-{
-	int	i;
-
-	i = 0;
-	if (!node)
-		return ;
-	if (node->execs)
-	{
-		while (node->execs[i])
-		{
-			free(node->execs[i]);
-			i++;
-		}
-		free(node->execs);
-	}
-	free(node);
-}
-
-t_exec	*create_exec_node(int id)
-{
-	t_exec	*node;
-
-	node = malloc(sizeof(t_exec));
-	if (!node)
-		return (NULL);
-	node->id = id;
-	node->size = 0;
-	node->fd_in = 0;
-	node->fd_out = 1;
-	node->trunc = 0;
-	node->append = 0;
-	node->redir_input = 0;
-	node->heredoc = 0;
-	node->path = NULL;
-	node->execs = NULL;
-	node->prev = NULL;
-	node->next = NULL;
-	node->pipe = 0;
-	return (node);
-}
-
-void	init_exec_context(t_exec_context *context, t_shell *shell)
-{
-	context->current_lexer = shell->lex_head;
-	context->lex_head = shell->lex_head;
-	context->current_exec = NULL;
-	context->exec_head = NULL;
-	context->exec_id = 0;
-	context->lex_id = 0;
-	context->fd_pipe = 0;
-}
 
 void	assign_command(t_shell *shell, t_exec_context *c)
 {

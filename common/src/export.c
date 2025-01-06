@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: romeo <romeo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: lakamba <lakamba@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 14:28:15 by kbaga             #+#    #+#             */
-/*   Updated: 2024/11/28 16:44:36 by romeo            ###   ########.fr       */
+/*   Updated: 2025/01/06 15:42:02 by lakamba          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,12 @@
 // 	free(node->val);
 // 	free(node);
 // }
+void	node_free(t_env_node *node)
+{
+	free(node->key);
+	free(node->val);
+	free(node);
+}
 
 int	export_args(t_shell *shell, char **args)
 {

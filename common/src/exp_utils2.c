@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exp_utils2.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: romeo <romeo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: lakamba <lakamba@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 14:47:09 by kbaga             #+#    #+#             */
-/*   Updated: 2024/11/28 16:31:02 by romeo            ###   ########.fr       */
+/*   Updated: 2025/01/06 15:41:52 by lakamba          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,11 +91,4 @@ int	exp_no_args(t_env *env)
 	print_env_array(pairs, count);
 	free_env_arr(pairs, count);
 	return (1);
-}
-
-void	node_free(t_env_node *node)
-{
-	free(node->key);
-	free(node->val);
-	free(node);
 }

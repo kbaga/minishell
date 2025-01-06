@@ -1,20 +1,34 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   redirection.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: lakamba <lakamba@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/01/06 15:43:15 by lakamba           #+#    #+#             */
+/*   Updated: 2025/01/06 15:47:54 by lakamba          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../inc/minishell.h"
 
 // Handling > (Truncate) Redirection
-void handle_truncate_redirection(t_exec *node, t_lx *current)
+void	handle_truncate_redirection(t_exec *node, t_lx *current)
 {
-	int fd;
+	int	fd;
 
 	current = current->next;
 	fd = open(current->str, O_WRONLY | O_CREAT | O_TRUNC, 0644);
-	if (fd == -1) {
+	if (fd == -1)
+	{
 		perror("open");
-		return;
+		return ;
 	}
-	if (dup2(fd, STDOUT_FILENO) == -1) {
+	if (dup2(fd, STDOUT_FILENO) == -1)
+	{
 		perror("dup2");
 		close(fd);
-		return;
+		return ;
 	}
 	close(fd);
 	node->fd_out = STDOUT_FILENO;
@@ -22,28 +36,26 @@ void handle_truncate_redirection(t_exec *node, t_lx *current)
 }
 
 // Handling >> (Append) Redirection
-void handle_append_redirection(t_exec *node, t_lx *current)
+void	handle_append_redirection(t_exec *node, t_lx *current)
 {
-	int fd;
+	int	fd;
 
-	if (!node || !current) {
-    fprintf(stderr, "Invalid node or current pointer\n");
-    return;
-}if (!current->next) {
-    fprintf(stderr, "Invalid next pointer in lexer list\n");
-    return;
-}
-
+	if (!node || !current)
+		return ;
+	if (!current->next)
+		return ;
 	current = current->next;
 	fd = open(current->str, O_WRONLY | O_CREAT | O_APPEND, 0644);
-	if (fd == -1) {
+	if (fd == -1)
+	{
 		perror("open");
-		return;
+		return ;
 	}
-	if (dup2(fd, STDOUT_FILENO) == -1) {
+	if (dup2(fd, STDOUT_FILENO) == -1)
+	{
 		perror("dup2");
 		close(fd);
-		return;
+		return ;
 	}
 	close(fd);
 	node->fd_out = STDOUT_FILENO;
@@ -51,20 +63,22 @@ void handle_append_redirection(t_exec *node, t_lx *current)
 }
 
 // Handling < (Input) Redirection
-void handle_input_redirection(t_exec *node, t_lx *current)
+void	handle_input_redirection(t_exec *node, t_lx *current)
 {
-	int fd;
+	int	fd;
 
 	current = current->next;
 	fd = open(current->str, O_RDONLY);
-	if (fd == -1) {
+	if (fd == -1)
+	{
 		perror("open");
-		return;
+		return ;
 	}
-	if (dup2(fd, STDIN_FILENO) == -1) {
+	if (dup2(fd, STDIN_FILENO) == -1)
+	{
 		perror("dup2");
 		close(fd);
-		return;
+		return ;
 	}
 	close(fd);
 	node->fd_in = STDIN_FILENO;
@@ -72,43 +86,27 @@ void handle_input_redirection(t_exec *node, t_lx *current)
 }
 
 // Check if we have to redirect
-void handle_redirection(t_shell *shell, t_exec_context *c)
+void	handle_redirection(t_shell *shell, t_exec_context *c)
 {
 	(void)shell;
-	// fprintf(stderr, "before handle spec : %s\n", c->current_lexer->str);
 	if (!c || !c->current_lexer->next || !c->current_lexer)
-	{
-        fprintf(stderr, "Redirection syntax error: missing argument\n");
 		return ;
-	}
 	if (c->current_lexer->type == TRUNCATE)
-	{
 		handle_truncate_redirection(c->current_exec, c->current_lexer);
-		// c->current_lexer = c->current_lexer->next;
-	}
 	else if (c->current_lexer->type == APPEND)
-	{
 		handle_append_redirection(c->current_exec, c->current_lexer);
-		// c->current_lexer = c->current_lexer->next;
-	}
-	else if (c->current_lexer->type == REDIRECT_INPUT) {
+	else if (c->current_lexer->type == REDIRECT_INPUT)
 		handle_input_redirection(c->current_exec, c->current_lexer);
-		// c->current_lexer = c->current_lexer->next;
-
-	}
-	else if (c->current_lexer->type == HEREDOC) {
+	else if (c->current_lexer->type == HEREDOC)
 		handle_heredoc_redirection(c->current_exec, c->current_lexer);
-		//c->current_lexer = c->current_lexer->next;
-	}
 	else if (c->current_lexer->type == PIPE)
 	{
 		link_exec_with_pipe(c->current_exec, c);
 		c->current_lexer = c->current_lexer->next;
-		return;
+		return ;
 	}
 	if (c->current_lexer && c->current_lexer->next)
 		c->current_lexer = c->current_lexer->next->next;
 	else
 		c->current_lexer = NULL;
-	
 }

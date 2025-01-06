@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strncpy.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kbaga <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: lakamba <lakamba@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 18:28:16 by kbaga             #+#    #+#             */
-/*   Updated: 2024/10/22 18:42:31 by kbaga            ###   ########.fr       */
+/*   Updated: 2024/12/19 17:54:18 by lakamba          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char *ft_strncpy(char *s1, char *s2, int len)
+char	*ft_strncpy(char *s1, char *s2, int len)
 {
 	int	i;
 

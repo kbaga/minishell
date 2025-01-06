@@ -6,7 +6,7 @@
 /*   By: lakamba <lakamba@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/23 18:08:30 by kbaga             #+#    #+#             */
-/*   Updated: 2024/11/25 19:34:15 by lakamba          ###   ########.fr       */
+/*   Updated: 2024/12/19 18:41:25 by lakamba          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ int	handle_token(t_token_ctx *ctx, int start, int len)
 int	process_token(t_token_ctx *ctx, int *i)
 {
 	int	start;
-	int token_len;
+	int	token_len;
 
 	start = *i;
 	while (ctx->s[*i] && !is_token(ctx->s + *i) && ctx->s[*i] != ' ')
@@ -80,11 +80,5 @@ int	process_token(t_token_ctx *ctx, int *i)
 			return (-1);
 		*i += token_len;
 	}
-	// if (ctx->s[*i] && is_token(ctx->s[*i]))
-	// {
-	// 	if (handle_token(ctx, *i, 1) == -1)
-	// 		return (-1);
-	// 	(*i)++;
-	// }
 	return (0);
 }
