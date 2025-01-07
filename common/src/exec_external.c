@@ -21,7 +21,13 @@ char	*get_path(char *cmd, t_env *env_list)
 	char	**allpath;
 	char	*path_part;
 	char	**s_cmd;
-
+	
+	if (cmd[0] == '/' || cmd[0] == '.') // Chemin absolu ou relatif
+	{
+		if (access(cmd, F_OK | X_OK) == 0)
+			return (ft_strdup(cmd)); // Commande directement accessible
+		return (NULL); // Chemin non valide
+	}
 	i = -1;
 	allpath = ft_split(my_getenv("PATH", env_list), ':');
 	s_cmd = ft_split(cmd, ' ');
@@ -70,9 +76,6 @@ void execute_command(t_exec *node, t_env *env_list)
 	 	command_not_found(node->execs[0]);
 		exit(EXIT_FAILURE);
 	}
-	// write(2, "before execve\n", 15);
-	// write(2, "this is the function = ", 24);
-	// write(2, node->execs[0], ft_strlen(node->execs[0]));
 	if (execve(resolved_path, node->execs, NULL) == -1) // Execute the command using execve
 	{
 		write(STDERR_FILENO, "Error: Command execution failed\n", 32);

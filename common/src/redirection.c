@@ -56,6 +56,10 @@ void handle_input_redirection(t_exec *node, t_lx *current)
 	int fd;
 
 	current = current->next;
+	if (access(current->str, R_OK) == -1) {
+		perror("access");
+		return;
+	}
 	fd = open(current->str, O_RDONLY);
 	if (fd == -1) {
 		perror("open");
@@ -79,6 +83,8 @@ void handle_redirection(t_shell *shell, t_exec_context *c)
 	if (!c || !c->current_lexer->next || !c->current_lexer)
 	{
         fprintf(stderr, "Redirection syntax error: missing argument\n");
+		if (c->current_lexer)
+			c->current_lexer = c->current_lexer->next;
 		return ;
 	}
 	if (c->current_lexer->type == TRUNCATE)

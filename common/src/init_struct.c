@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_struct.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kbaga <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: romeo <romeo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 13:54:48 by kbaga             #+#    #+#             */
-/*   Updated: 2024/10/07 14:03:21 by kbaga            ###   ########.fr       */
+/*   Updated: 2024/12/18 22:13:14 by romeo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@ void	init_exec(t_exec *exec)
 	exec->append = 0;
 	exec->redir_input = 0;
 	exec->heredoc = 0;
-	exec->path = NULL;
 	exec->execs = NULL;
 	exec->prev = NULL;
 	exec->next = NULL;

@@ -6,7 +6,7 @@
 /*   By: romeo <romeo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 23:38:53 by lakamba           #+#    #+#             */
-/*   Updated: 2024/12/14 05:22:57 by romeo            ###   ########.fr       */
+/*   Updated: 2024/12/18 22:15:28 by romeo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,4 +67,28 @@ char	**tab_command(t_exec_context *context)
 	}
 	result[command_count] = NULL; // Null-terminate the array
 	return (result);
+}
+
+void free_exec_node2(t_exec *node)
+{
+    if (!node)
+        return;
+    if (node->execs) {
+        for (int i = 0; node->execs[i]; i++)
+            free(node->execs[i]); // Libère chaque chaîne
+        free(node->execs);        // Libère le tableau de chaînes
+    }
+    free(node); // Libère le nœud lui-même
+}
+
+void free_exec_list(t_exec *head)
+{
+    t_exec *tmp;
+
+    while (head)
+    {
+        tmp = head->next;  // Sauvegarde le suivant
+        free_exec_node2(head); // Libère le nœud actuel
+        head = tmp;        // Passe au suivant
+    }
 }

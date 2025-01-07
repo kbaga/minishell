@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lakamba <lakamba@student.42.fr>            +#+  +:+       +#+        */
+/*   By: romeo <romeo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/24 19:04:57 by lakamba           #+#    #+#             */
-/*   Updated: 2024/12/05 16:16:18 by lakamba          ###   ########.fr       */
+/*   Updated: 2025/01/04 19:50:09 by romeo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,5 +80,7 @@ void	ft_exit(t_shell *shell, char **args)
 	free_env(shell->environ);
 	free_lex(shell->lex_head);
 	free_tab(args);
+	rl_deprep_terminal();   // Libère les keymaps et autres données internes
+	rl_clear_history();     // Libère l'historique+++
 	exit(exit_code);
 }

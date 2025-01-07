@@ -17,14 +17,12 @@ void fork_builtin(t_shell *shell, t_exec *head, t_env *env_list)
 	{
 		if (current->fd_in != 0)
 		{
-			fprintf(stderr, "node -> %s ; fd_in = %d\n", current->execs[0], current->fd_in);
 			if (dup2(current->fd_in, STDIN_FILENO) == -1)
 				error_command("dup2 fd_in");
 			close(current->fd_in);
 		}
 		if (current->fd_out != 1)
 		{
-			fprintf(stderr, "node -> %s ; fd_out = %d\n", current->execs[0], current->fd_out);
 			if (dup2(current->fd_out, STDOUT_FILENO) == -1)
 				error_command("dup2 fd_out");
 			close(current->fd_out);
@@ -38,11 +36,10 @@ void fork_builtin(t_shell *shell, t_exec *head, t_env *env_list)
 		if (current->fd_in != 0) close(current->fd_in);
 		if (current->fd_out != 1) close(current->fd_out);
 	}
-	// fprintf(stderr, "waiting for child\n");
-	while (wait(NULL) > 0); // Wait for all children
-	// fprintf(stderr, "_______\nend of waiting for child\n");
+	add_pid(shell->pid_list, pid); // Wait for all children
 }
-void fork_external(t_exec *head, t_env *env_list)
+
+void fork_external(t_shell *shell, t_exec *head, t_env *env_list)
 {
 	t_exec *current;
 	pid_t pid;
@@ -66,7 +63,7 @@ void fork_external(t_exec *head, t_env *env_list)
 		if (current->fd_out != 1) close(current->fd_out);
 	}
 	// fprintf(stderr, "waiting for child\n");
-	while (wait(NULL) > 0); // Wait for all children
+	add_pid(shell->pid_list, pid); // Wait for all children
 	// fprintf(stderr, "_______\nend of waiting for child\n");
 }
 
@@ -99,7 +96,7 @@ void send_to_exec(t_shell *shell, t_exec *cmd, t_env *env)
 	else if (is_builtin(cmd->execs[0]) && cmd->pipe == 1)
 		fork_builtin(shell, cmd, env);
 	else
-		fork_external(cmd, env);
+		fork_external(shell, cmd, env);
 	// fprintf(stderr, "scooby send to exec\n");
 }
 

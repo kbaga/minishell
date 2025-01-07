@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_shell.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lakamba <lakamba@student.42.fr>            +#+  +:+       +#+        */
+/*   By: romeo <romeo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/14 16:15:16 by kbaga             #+#    #+#             */
-/*   Updated: 2024/11/23 19:22:44 by lakamba          ###   ########.fr       */
+/*   Updated: 2024/12/31 17:53:43 by romeo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,6 +108,7 @@ t_shell	*init_shell(char **envp)
 	shell->lex_head = NULL;
 	shell->executor = NULL;
 	shell->exit_status = 0;
+	shell->pid_list = NULL; //pour la liste pid 
 	return (shell);
 }
 /*

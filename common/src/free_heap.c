@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_heap.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kbaga <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: romeo <romeo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 15:35:05 by kbaga             #+#    #+#             */
-/*   Updated: 2024/11/18 20:32:30 by kbaga            ###   ########.fr       */
+/*   Updated: 2024/12/18 22:12:58 by romeo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,8 +75,6 @@ void	free_exec(t_exec *list)
 	{
 		temp = list;
 		list = list->next;
-		if (temp->path)
-			free_tab(temp->path);
 		if (temp->execs)
 			free_tab(temp->execs);
 		free(temp);

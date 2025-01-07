@@ -6,7 +6,7 @@
 /*   By: romeo <romeo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 14:27:20 by kbaga             #+#    #+#             */
-/*   Updated: 2024/12/18 17:11:34 by romeo            ###   ########.fr       */
+/*   Updated: 2025/01/02 12:18:19 by romeo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,15 +104,22 @@ typedef struct s_env_list
 	t_env_node	*head;
 }	t_env;
 
+typedef struct s_pid_list {
+    pid_t *pids;
+    size_t count;
+    size_t capacity;
+} t_pid_list;
+
 /* Shell State */
 typedef struct s_shell
 {
-	char				*rl_input;
-	char				*rl_copy;
-	int					exit_status;
-	t_env				*environ;
-	t_lx		*lex_head;
-	struct s_exec		*executor;
+	char			*rl_input;
+	char			*rl_copy;
+	int				exit_status;
+	t_env			*environ;
+	t_lx			*lex_head;
+	struct s_exec	*executor;
+	t_pid_list		*pid_list;
 }	t_shell;
 
 /* Exec Node */
@@ -126,7 +133,6 @@ typedef struct s_exec
 	int				append;
 	int				redir_input;
 	int				heredoc;
-	char			**path;
 	char			**execs;
 	struct s_exec	*prev;
 	struct s_exec	*next;
@@ -139,7 +145,7 @@ typedef struct s_exec_context
 	t_lx	*current_lexer;
 	t_exec			*exec_head;
 	t_exec			*current_exec;
-	t_lx	*lex_head;
+	t_lx			*lex_head;
 	t_exec			*exec_tail;
 	int				lex_id;
 	int				exec_id;
@@ -295,12 +301,21 @@ void			exporting(t_shell *shell, char *str);
 t_exec			*create_exec_list(t_shell *shell);
 char			**tab_command(t_exec_context *context);
 void			execute_command(t_exec *node, t_env *env_list);
-void			fork_external(t_exec *head, t_env *env_list);
+void			fork_external(t_shell *shell, t_exec *head, t_env *env_list);
 void			fork_builtin(t_shell *shell, t_exec *head, t_env *env_list);
 void			send_to_exec(t_shell *shell, t_exec *cmd, t_env *env_list);
 void			execute_exec_list(t_shell *shell, t_exec *cmd_list, t_env *env);
 void			error_command(const char *message);
 void			command_not_found(const char *cmd);
+
+/*          PID PROCESS MANIPULATION        */
+
+
+t_pid_list	*init_pid_list(void);
+void		add_pid(t_pid_list *list, pid_t pid);
+void		wait_all_pids(t_pid_list *list);
+void		free_pid_list(t_pid_list *list);
+
 
 /* Redirection */
 void			handle_redirection(t_shell *shell, t_exec_context *context);
@@ -336,6 +351,8 @@ char			*ft_strjoin2(char const *s1, char const *s2);
 char			**ft_split(char const *s, char c);
 void			ft_free_tab(char **tab);
 void			no_delim_found(char *str, int *len);
+void			free_exec_list(t_exec *head);
+void			free_exec_node(t_exec *node);
 
 /* Safe Functions */
 void			*safe_malloc(size_t bytes);
@@ -351,7 +368,7 @@ void			print_env_array(t_pair *pairs, int count);
 void			free_env_arr(t_pair *pairs, int count);
 
 /* Free Functions */
-void			free_exec_node(t_exec *node);
+void			free_exec_node2(t_exec *node);
 void			free_exec(t_exec *list);
 void			free_heap(t_shell *shell);
 

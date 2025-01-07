@@ -6,7 +6,7 @@
 /*   By: romeo <romeo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/30 16:17:38 by kbaga             #+#    #+#             */
-/*   Updated: 2024/11/28 17:16:17 by romeo            ###   ########.fr       */
+/*   Updated: 2025/01/04 19:43:13 by romeo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ int	expand_var(t_shell *shell, char **s, t_exp *exp, int i)
 
 	if (!shell || !s || !*s || !exp)
 		return (-1);
-	printf("expand var\n");
+	// printf("expand var\n");
 	i = extract_var_name(*s, i + 1, var_name, 256);
 	var_val = get_var_value(shell, var_name);
 	exp->res = ft_join_exp(exp->res, var_val);

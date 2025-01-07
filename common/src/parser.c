@@ -6,7 +6,7 @@
 /*   By: romeo <romeo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 18:31:25 by kbaga             #+#    #+#             */
-/*   Updated: 2024/12/17 21:46:03 by romeo            ###   ########.fr       */
+/*   Updated: 2025/01/02 12:11:54 by romeo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,10 @@ int	parser(t_shell *shell)
 	}
 	interpolate_tokens(shell);
 	shell->executor = create_exec_list(shell);
+	shell->pid_list = init_pid_list();
 	execute_exec_list(shell, shell->executor, shell->environ);
+	wait_all_pids(shell->pid_list);
+	free_pid_list(shell->pid_list);
 	//process_tokens(shell, shell->lex_head);
 	return (1);
 }
@@ -112,6 +115,7 @@ int	main(int argc, char **argv, char **envp)
 		if (*line)
 			add_history(line);
 		handle_line(shell, line);
+		//free_exec_list(shell->executor);
 		reset_shell(shell);
 		free(line);
 		line = NULL;

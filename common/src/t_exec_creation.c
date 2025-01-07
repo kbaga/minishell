@@ -34,7 +34,6 @@ t_exec	*create_exec_node(int id)
 	node->append = 0;
 	node->redir_input = 0;
 	node->heredoc = 0;
-	node->path = NULL;
 	node->execs = NULL;
 	node->prev = NULL;
 	node->next = NULL;
@@ -77,7 +76,7 @@ static int	process_lexer_node(t_shell *shell, t_exec_context *context)
 {
 	while (context->current_lexer && context->current_lexer->type != COMMAND)
 		handle_redirection(shell, context);
-	if (context->current_lexer->type == COMMAND)
+	if (context->current_lexer && context->current_lexer->type == COMMAND)
 		assign_command(shell, context);
 	while (context->current_lexer && context->current_lexer->type != COMMAND)
 		handle_redirection(shell, context);
