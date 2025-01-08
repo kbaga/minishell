@@ -6,7 +6,7 @@
 /*   By: romeo <romeo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/22 15:04:29 by lakamba           #+#    #+#             */
-/*   Updated: 2024/11/28 18:08:24 by romeo            ###   ########.fr       */
+/*   Updated: 2025/01/08 10:52:45 by romeo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ void	handle_builtin(t_shell *shell, t_exec *exec_node)
 		return ;
 	execs = exec_node->execs;
 	if(ft_strcmp(execs[0], "cd") == 0)
-		ft_cd(execs);
+		ft_cd(shell->environ, execs);
 	if (ft_strcmp(execs[0], "echo") == 0)
 		ft_echo(execs, shell);
 	else if (ft_strcmp(execs[0], "export") == 0)

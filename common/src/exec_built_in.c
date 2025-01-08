@@ -17,7 +17,7 @@ void execute_builtin(t_shell *shell, t_exec *exec_node)
 	if (!exec_node || !exec_node->execs || exec_node->execs[0])
 		return ;
 	if (strcmp(exec_node->execs[0], "cd") == 0)
-		ft_cd(exec_node->execs);
+		ft_cd(shell->environ, exec_node->execs);
 	if (is_builtin(exec_node->execs[0]))
 		handle_builtin(shell, exec_node);
 	else

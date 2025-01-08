@@ -1,0 +1,11 @@
+minishell> yes "no" | head -n 10
+no
+no
+no
+no
+no
+no
+no
+no
+no
+no

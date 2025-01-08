@@ -6,7 +6,7 @@
 /*   By: romeo <romeo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 14:27:20 by kbaga             #+#    #+#             */
-/*   Updated: 2024/11/29 17:14:02 by romeo            ###   ########.fr       */
+/*   Updated: 2025/01/08 10:47:41 by romeo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -277,7 +277,7 @@ int				process_token(t_token_ctx *ctx, int *i);
 
 /* Builtins */
 int				is_builtin(const char *command);
-void			ft_cd(char **args);
+void			ft_cd(t_env *env, char **args);
 //void			ft_echo(char **args);
 void			ft_echo(char **execs, t_shell *shell); ///kenny
 void			ft_env(t_env_node *env);
@@ -290,6 +290,9 @@ void			execute_builtin(t_shell *shell, t_exec *cmd);
 void			handle_builtin(t_shell *shell, t_exec *exec_node);
 void			exporting(t_shell *shell, char *str);
 
+/*       CD utils       */
+
+void	handle_cd_dash(t_env *env);
 
 
 
